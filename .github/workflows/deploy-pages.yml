@@ -29,6 +29,7 @@ jobs:
         run: |
           set -e
 
+          test -f "index.html"
           test -f "Conteudo_Geometria_Plana/index.html"
           test -f "Formula_Geometria_Plana/geometria-plana.html"
           test -f "robots.txt"
