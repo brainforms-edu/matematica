@@ -52,7 +52,7 @@ O BrainForms foi desenvolvido para ajudar estudantes a superarem dificuldades na
 ## Estrutura do Projeto
 
 ```text
-Conteudo_Geometria_Plana/
+conteudo-geometria-plana/
   index.html
   css/
     index.css
@@ -60,7 +60,7 @@ Conteudo_Geometria_Plana/
     index.js
   Imagens/
 
-Formula_Geometria_Plana/
+formula-geometria-plana/
   geometria-plana.html
   css/
     geometria-plana.css
@@ -69,8 +69,6 @@ Formula_Geometria_Plana/
     geometria-plana-mobile-fix.js
     info-button.js
   Imagens/
-
-teste.html
 ```
 
 ## Tecnologias
@@ -83,8 +81,8 @@ teste.html
 
 ### Opção 1: Abrir direto no navegador
 
-1. Abra o arquivo `Conteudo_Geometria_Plana/index.html` no navegador.
-2. Para a parte de fórmulas, abra `Formula_Geometria_Plana/geometria-plana.html`.
+1. Abra o arquivo `conteudo-geometria-plana/index.html` no navegador.
+2. Para a parte de fórmulas, abra `formula-geometria-plana/geometria-plana.html`.
 
 ### Opção 2: Servidor local (recomendado)
 
@@ -92,7 +90,7 @@ Use uma extensão como **Five Server** no VS Code ou outro servidor estático.
 
 Exemplo com VS Code:
 
-1. Clique com o botão direito em `Conteudo_Geometria_Plana/index.html`.
+1. Clique com o botão direito em `conteudo-geometria-plana/index.html`.
 2. Selecione **Open with Five Server**.
 
 ## Funcionalidades
