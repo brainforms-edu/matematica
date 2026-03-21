@@ -30,8 +30,8 @@ jobs:
           set -e
 
           test -f "index.html"
-          test -f "Conteudo_Geometria_Plana/index.html"
-          test -f "Formula_Geometria_Plana/geometria-plana.html"
+          test -f "conteudo-geometria-plana/index.html"
+          test -f "formula-geometria-plana/geometria-plana.html"
           test -f "robots.txt"
           test -f "sitemap.xml"
 
@@ -39,10 +39,10 @@ jobs:
         run: |
           set -e
 
-          grep -q "<title>" "Conteudo_Geometria_Plana/index.html"
-          grep -q "<title>" "Formula_Geometria_Plana/geometria-plana.html"
-          grep -qi "viewport" "Conteudo_Geometria_Plana/index.html"
-          grep -qi "viewport" "Formula_Geometria_Plana/geometria-plana.html"
+          grep -q "<title>" "conteudo-geometria-plana/index.html"
+          grep -q "<title>" "formula-geometria-plana/geometria-plana.html"
+          grep -qi "viewport" "conteudo-geometria-plana/index.html"
+          grep -qi "viewport" "formula-geometria-plana/geometria-plana.html"
 
       - name: Validar sitemap e robots
         run: |
