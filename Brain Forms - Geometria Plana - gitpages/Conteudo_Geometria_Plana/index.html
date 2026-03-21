@@ -1,0 +1,1296 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conteúdo de Geometria Plana | BrainForms</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="icon" href="Imagens/Logo sem Fundo.png" type="image/png">
+
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms" />
+      <span>BrainForms</span>
+    </a>
+  </nav>
+
+  <nav class="breadcrumb" aria-label="Navegação rápida">
+    <div class="crumbs" role="navigation">
+      <a href="index.html" class="item" aria-current="page">Conteúdo</a>
+      <span class="sep">/</span>
+      <a href="../Formula_Geometria_Plana/geometria-plana.html" class="item">Fórmulas</a>
+    </div>
+  </nav>
+
+<section class="section">
+  <div class="hero-section">
+    <h1>Geometria Plana</h1>
+    <p>Conceitos, fórmulas e aplicações no Ensino Médio</p>
+  </div>
+
+  <aside class="topic-sidebar" aria-label="Navegação por tópicos">
+    <h2>Tópicos</h2>
+    <a href="#introducao">1. Introdução</a>
+    <a href="#historia-origem">2. História de Origem</a>
+    <a href="#conceitos-fundamentais">3. Conceitos Fundamentais</a>
+    <a href="#figuras-formulas">4. Figuras e Fórmulas</a>
+    <a href="#aplicacoes-cartografia">5. Cartografia e Projeções</a>
+    <a href="#teorema-pitagoras">6. Teorema de Pitágoras</a>
+    <a href="#classificacao-triangulos">7. Classificação de Triângulos</a>
+    <a href="#transformacoes-geometricas">8. Transformações Geométricas</a>
+    <a href="#ladrilhamento-plano">9. Ladrilhamento do Plano</a>
+    <a href="#exemplos-pratica">10. Exemplos na Prática</a>
+    <a href="#onde-aplicar">11. Onde Aplicar</a>
+    <a href="#erros-dificuldades">12. Erros e Dificuldades</a>
+    <a href="#enem">13. ENEM</a>
+    <a href="#grade-bncc">14. Grade BNCC</a>
+  </aside>
+
+  <!-- INTRODUÇÃO -->
+  <div class="def-container">
+    <div class="explicacao">
+      <h3 id="introducao">1. Introdução</h3>
+       <p>
+        A Geometria Plana é a área da Matemática que estuda figuras bidimensionais, ou seja, formas que possuem 
+        apenas comprimento e largura. Seu objetivo é analisar propriedades, relações e medidas dessas figuras, 
+        possibilitando o cálculo de área, perímetro e ângulos.
+      </p>
+      <p>
+        O domínio desse conteúdo é essencial para a resolução de problemas matemáticos que envolvem interpretação 
+        de figuras e aplicação direta de fórmulas. No Ensino Médio e em avaliações como o ENEM, a Geometria Plana 
+        é frequentemente explorada por meio de situações que exigem análise lógica, precisão nos cálculos e 
+        compreensão das propriedades das formas geométricas.
+      </p>
+      <p>
+       Neste módulo, você estudará a origem da Geometria Plana, os conceitos
+        fundamentais, as principais fórmulas, aplicações práticas no cotidiano,
+        exemplos resolvidos, erros comuns e como esse conteúdo é cobrado no ENEM.
+      </p>
+
+      <!-- ORIGEM -->
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h3 id="historia-origem">2. História de Origem</h3>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+           <p>
+            A Geometria Plana surgiu da necessidade prática de medir terras, construir edificações 
+            e organizar espaços. Registros históricos indicam que civilizações antigas já utilizavam 
+            conhecimentos geométricos para resolver problemas relacionados à agricultura, 
+            construção e divisão de propriedades.
+          </p>
+
+          <div class="image-placeholder">
+            <figure style="text-align:center; margin:15px 0;">
+              <img src="Imagens/historia_geometria_plana.png" alt="História da Geometria Plana" >
+            </figure>
+          </div>
+
+          <p>
+            No Egito Antigo, por exemplo, técnicas geométricas eram aplicadas para redefinir 
+            limites de terrenos após as cheias do rio Nilo. Já na Grécia Antiga, a Geometria 
+            passou a ser estudada de forma mais teórica e organizada, transformando-se em 
+            um campo estruturado do conhecimento matemático.
+          </p>
+
+          <p>
+            Um dos grandes responsáveis por essa organização foi 
+            <strong>Euclides de Alexandria</strong>, que sistematizou os conhecimentos geométricos 
+            em uma obra composta por definições, postulados e demonstrações lógicas. 
+            Esse modelo de organização influenciou o ensino da Matemática por séculos.
+          </p>
+
+          <div class="image-placeholder">
+            <figure style="text-align:center; margin:15px 0;">
+              <img src="Imagens/Euclides.png" alt="Retrato de Euclides" >
+              <figcaption style="font-size:14px;color:#333;">Euclides, o "Pai da Geometria".</figcaption>
+            </figure>
+          </div>
+
+          <p>
+            A partir desse desenvolvimento histórico, a Geometria Plana consolidou-se como 
+            uma área fundamental da Matemática, sendo hoje parte essencial do currículo 
+            escolar e base para diversas aplicações científicas e tecnológicas.
+          </p>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- CONCEITOS -->
+       <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h3 id="conceitos-fundamentais">3. Conceitos Fundamentais</h3>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+              <p>
+              Para compreender e aplicar corretamente as fórmulas da Geometria Plana,
+              é necessário dominar seus conceitos básicos. Esses elementos formam
+              a base para o estudo das figuras geométricas e seus cálculos.
+            </p>
+
+            <!-- PONTO -->
+            <h4>Ponto</h4>
+            <p>
+              O <strong>ponto</strong> indica uma posição no plano. Ele não possui dimensão,
+              representando apenas uma localização.
+            </p>
+
+            <ul>
+              <li>Representado por letras maiúsculas (A, B, C...).</li>
+              <li>Não possui comprimento nem largura.</li>
+            </ul>
+
+            <div class="image-placeholder">
+              <img src="Imagens/ponto_geometria.png" alt="Representação de um ponto" >
+            </div>
+
+            <!-- RETA -->
+            <h4>Reta</h4>
+            <p>
+              A <strong>reta</strong> é formada por infinitos pontos alinhados.
+              Ela se estende indefinidamente em ambos os sentidos.
+            </p>
+
+            <ul>
+              <li>Não possui início nem fim.</li>
+              <li>Possui apenas comprimento.</li>
+            </ul>
+
+            <div class="image-placeholder">
+              <img src="Imagens/reta_geometria.png" alt="Representação de uma reta" >
+            </div>
+
+            <!-- SEMIRRETA -->
+            <h4>Semirreta</h4>
+            <p>
+              A <strong>semirreta</strong> é parte de uma reta que possui
+              <span>um ponto de origem</span> e se prolonga infinitamente
+              em apenas um sentido.
+            </p>
+
+            <ul>
+              <li>Possui início.</li>
+              <li>Não possui fim.</li>
+            </ul>
+
+            <div class="image-placeholder">
+              <img src="Imagens/semirreta_geometria.png" alt="Representação de uma semirreta" >
+            </div>
+
+            <!-- SEGMENTO DE RETA -->
+            <h4>Segmento de Reta</h4>
+            <p>
+              O <strong>segmento de reta</strong> é a parte da reta limitada
+              por dois pontos.
+            </p>
+
+            <ul>
+              <li>Possui início e fim.</li>
+              <li>Tem comprimento definido.</li>
+            </ul>
+
+            <div class="image-placeholder">
+              <img src="Imagens/segmento_reta_geometria.png" alt="Representação de um segmento de reta" >
+            </div>
+
+            <!-- ÂNGULOS -->
+            <h4>Ângulos</h4>
+            <p>
+              O <strong>ângulo</strong> é a região formada pelo encontro de duas
+              semirretas que possuem a mesma origem.
+            </p>
+
+            <p>
+              A medida do ângulo é expressa em <strong>graus (°)</strong>.
+            </p>
+
+            <ul>
+              <li><strong>Ângulo agudo:</strong> menor que 90°</li>
+              <li><strong>Ângulo reto:</strong> exatamente 90°</li>
+              <li><strong>Ângulo obtuso:</strong> maior que 90° e menor que 180°</li>
+              <li><strong>Ângulo raso:</strong> exatamente 180°</li>
+              <li><strong>Ângulo completo:</strong> 360°</li>
+            </ul>
+
+            <div class="image-placeholder">
+              <img src="Imagens/angulo_geometria.png" alt="Representação dos tipos de ângulos" >
+            </div>
+
+            <!-- PLANO -->
+            <h4>Plano</h4>
+            <p>
+              O <strong>plano</strong> é uma superfície ilimitada onde
+              as figuras da Geometria Plana são representadas.
+            </p>
+
+            <ul>
+              <li>Possui duas dimensões: comprimento e largura.</li>
+              <li>Contém infinitos pontos e retas.</li>
+            </ul>
+
+            <div class="image-placeholder">
+              <img src="Imagens/plano_geometria.png" alt="Representação de um plano" >
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- FÓRMULAS -->
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h3 id="figuras-formulas">4. Figuras e Fórmulas da Geometria Plana</h3>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+              <p>
+            As fórmulas da Geometria Plana são utilizadas para calcular principalmente 
+            <strong>área</strong> (medida da superfície interna de uma figura) e 
+            <strong>perímetro</strong> (soma de todos os lados da figura).
+            A compreensão do significado de cada fórmula é essencial para aplicá-las corretamente.
+          </p>
+
+          <!-- QUADRADO -->
+          <h4>Quadrado</h4>
+
+          <p>
+            O quadrado possui quatro lados iguais e quatro ângulos retos.
+          </p>
+
+          <p><strong>Área:</strong> A = l²</p>
+          <p>
+            A área é calculada multiplicando o lado por ele mesmo, pois todos os lados
+            possuem a mesma medida. O valor l² representa lado × lado.
+          </p>
+
+          <p><strong>Perímetro:</strong> P = 4l</p>
+          <p>
+            O perímetro corresponde à soma dos quatro lados iguais.
+          </p>
+
+          <div class="image-placeholder">
+            <img src="Imagens/quadrado_formula.png" alt="Quadrado com lado identificado como l">
+          </div>
+
+          <br>
+
+          <!-- RETÂNGULO -->
+          <h4>Retângulo</h4>
+
+          <p>
+            O retângulo possui lados opostos paralelos e ângulos de 90°.
+          </p>
+
+          <p><strong>Área:</strong> A = b × h</p>
+          <p>
+            A área é obtida multiplicando a base pela altura, pois o retângulo
+            pode ser interpretado como várias unidades organizadas em linhas e colunas.
+          </p>
+
+          <p><strong>Perímetro:</strong> P = 2(b + h)</p>
+          <p>
+            O perímetro é a soma de todos os lados, considerando que a base e a altura
+            aparecem duas vezes.
+          </p>
+
+          <div class="image-placeholder">
+            <img src="Imagens/retangulo_formula.png" alt="Retângulo com base b e altura h identificadas">
+          </div>
+
+          <br>
+
+          <!-- TRIÂNGULO -->
+          <h4>Triângulo</h4>
+
+          <p>
+            O triângulo é uma figura formada por três lados.
+          </p>
+
+          <p><strong>Área:</strong> A = <span class="inline-frac"><span class="num">b × h</span><span class="den">2</span></span></p>
+          <p>
+            A área do triângulo é metade da área de um retângulo que teria
+            a mesma base e altura. Por isso, dividimos o produto da base pela altura por 2.
+          </p>
+
+          <p><strong>Perímetro:</strong> P = a + b + c</p>
+          <p>
+            O perímetro é obtido somando as medidas dos três lados.
+          </p>
+
+          <div class="image-placeholder">
+            <img src="Imagens/triangulo_formula.png" alt="Triângulo com base b e altura h indicadas">
+          </div>
+
+          <br>
+
+          <!-- PARALELOGRAMO -->
+          <h4>Paralelogramo</h4>
+
+          <p>
+            O paralelogramo possui lados opostos paralelos e congruentes.
+          </p>
+
+          <p><strong>Área:</strong> A = b × h</p>
+          <p>
+            Apesar de possuir lados inclinados, sua área é calculada da mesma
+            forma que a do retângulo, pois pode ser reorganizado visualmente
+            em um retângulo equivalente.
+          </p>
+
+          <p><strong>Perímetro:</strong> P = 2(a + b)</p>
+          <p>
+            Soma-se os dois pares de lados opostos.
+          </p>
+
+          <div class="image-placeholder">
+            <img src="Imagens/paralelogramo_formula.png" alt="Paralelogramo com base b e altura h indicadas">
+          </div>
+
+          <br>
+
+          <!-- LOSANGO -->
+          <h4>Losango</h4>
+
+          <p>
+            O losango é um quadrilátero com quatro lados iguais.
+          </p>
+
+          <p><strong>Área:</strong> A = <span class="inline-frac"><span class="num">D × d</span><span class="den">2</span></span></p>
+          <p>
+            A área é calculada multiplicando as diagonais e dividindo por 2,
+            pois as diagonais dividem o losango em quatro triângulos congruentes.
+          </p>
+
+          <p><strong>Perímetro:</strong> P = 4l</p>
+          <p>
+            Como todos os lados são iguais, basta multiplicar o lado por 4.
+          </p>
+
+          <div class="image-placeholder">
+            <img src="Imagens/losango_formula.png" alt="Losango com diagonais D e d indicadas">
+          </div>
+
+          <br>
+
+          <!-- TRAPÉZIO -->
+          <h4>Trapézio</h4>
+
+          <p>
+            O trapézio é um quadrilátero que possui apenas um par de lados paralelos.
+          </p>
+
+          <p><strong>Área:</strong> A = <span class="inline-frac"><span class="num">(B + b) × h</span><span class="den">2</span></span></p>
+          <p>
+            A área é obtida pela média das duas bases multiplicada pela altura.
+            Isso ocorre porque o trapézio pode ser reorganizado formando
+            um paralelogramo equivalente.
+          </p>
+
+          <div class="image-placeholder">
+            <img src="Imagens/trapezio_formula.png" alt="Trapézio com bases B e b e altura h indicadas">
+          </div>
+
+          <br>
+
+          <!-- CÍRCULO -->
+          <h4>Circunferência e Círculo</h4>
+
+          <p>
+            O círculo é a região interna delimitada por uma circunferência.
+            A circunferência representa apenas o contorno da figura, enquanto
+            o círculo corresponde à área interna limitada por esse contorno.
+          </p>
+
+          <p><strong>Comprimento da circunferência:</strong> C = 2πr</p>
+          <p>
+            Essa fórmula calcula o tamanho do contorno do círculo.
+            O valor π representa a razão constante entre o comprimento
+            da circunferência e seu diâmetro.
+          </p>
+
+          <p><strong>Área do círculo:</strong> A = πr²</p>
+          <p>
+            A área depende do raio ao quadrado, pois quanto maior o raio,
+            maior será a superfície interna da figura.
+          </p>
+
+          <div class="image-placeholder">
+            <img src="Imagens/circulo_formula.png" alt="Círculo com raio r identificado a partir do centro">
+          </div>
+
+          <br>
+
+          <!-- CRESCIMENTO LINEAR X QUADRÁTICO -->
+          <h4>Compreensão Matemática: Crescimento Linear e Quadrático</h4>
+
+          <p>
+              Ao estudar fórmulas de área e perímetro, é importante compreender
+              como essas grandezas variam quando as dimensões da figura aumentam.
+              Esse tipo de leitura ajuda a interpretar gráficos, tabelas e situações
+              de escala em questões do ENEM.
+          </p>
+
+          <p>
+            Considere um quadrado de lado <strong>l</strong>. As expressões são:
+          </p>
+
+          <p><strong>Perímetro:</strong> P = 4l</p>
+          <p><strong>Área:</strong> A = l²</p>
+
+          <p>
+            Observe os valores para alguns lados:
+          </p>
+
+          <table class="comparison-table" aria-label="Comparação entre perímetro e área de um quadrado">
+            <thead>
+              <tr>
+                <th>Lado (l)</th>
+                <th>Perímetro P = 4l</th>
+                <th>Área A = l²</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2</td>
+                <td>8</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>12</td>
+                <td>9</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>16</td>
+                <td>16</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>20</td>
+                <td>25</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>24</td>
+                <td>36</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h5 class="section-subtitle">Gráfico de Crescimento</h5>
+
+          <figure class="didactic-figure">
+            <img src="Imagens/crescimento_linear_quadratico.png" alt="Gráfico comparando crescimento linear do perímetro e quadrático da área">
+            <figcaption>Comparação gráfica: o perímetro cresce linearmente e a área cresce de forma quadrática.</figcaption>
+          </figure>
+
+          <ul>
+            <li><strong>Crescimento linear:</strong> quando l aumenta 1 unidade, o perímetro aumenta sempre 4 unidades.</li>
+            <li><strong>Crescimento quadrático:</strong> os acréscimos da área aumentam progressivamente (de 4 para 9, depois 16, 25, 36...).</li>
+          </ul>
+
+          <p>
+            Por isso, dobrar o lado de um quadrado não dobra a área: ela cresce mais rapidamente.
+          </p>
+
+          <div class="didactic-note">
+            Exemplo rápido: se o lado passa de 3 para 6 (dobrou), o perímetro passa de 12 para 24 (dobrou),
+            mas a área passa de 9 para 36 (quadruplicou).
+          </div>
+
+          <p>
+          Esse conceito é fundamental em projetos arquitetônicos, escalas, 
+          engenharia e também em questões do ENEM, onde é necessário 
+          interpretar o comportamento das grandezas e não apenas aplicar fórmulas.
+          </p>
+        
+          </div>
+        </div>
+      </div>
+
+      <!-- CARTOGRAFIA E PROJEÇÕES -->
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h3 id="aplicacoes-cartografia">5. Aplicações da Geometria: Cartografia e Projeções</h3>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+
+            <p>
+              A Terra possui forma aproximadamente esférica. 
+              Como não é possível planificar uma esfera sem deformações,
+              utilizam-se projeções cartográficas para representar a
+              superfície curva do planeta em um plano.
+            </p>
+
+            <p>
+              Essas projeções são construídas a partir de superfícies
+              geométricas auxiliares, como cilindros, cones ou planos,
+              sobre as quais os pontos da Terra são projetados.
+            </p>
+
+            <figure class="didactic-figure">
+              <img src="Imagens/cartografia_projecoes_didatico.png" alt="Esquema didático de projeções cartográficas cilíndrica, cônica e plana">
+              <figcaption>Comparação didática entre projeções cilíndrica, cônica e plana (azimutal).</figcaption>
+            </figure>
+
+            <h4>Projeção Cilíndrica</h4>
+
+            <p>
+              Imagina-se um cilindro envolvendo a Terra. Os pontos do globo
+              são projetados sobre essa superfície, que depois é aberta e
+              transformada em um plano.
+            </p>
+
+            <p>
+              Preserva melhor as regiões próximas à Linha do Equador,
+              mas distorce significativamente as áreas próximas aos polos.
+            </p>
+
+            <p>
+              Um exemplo clássico é a <strong>projeção de Mercator</strong>,
+              muito utilizada na navegação por preservar direções locais.
+            </p>
+
+            <h4>Projeção Cônica</h4>
+
+            <p>
+              Utiliza-se um cone apoiado sobre parte da superfície terrestre.
+              Após projetar os pontos sobre o cone, ele é aberto,
+              formando o mapa plano.
+            </p>
+
+            <p>
+              Apresenta menor deformação em médias latitudes,
+              sendo comum na representação de países ou continentes.
+            </p>
+
+            <h4>Projeção Plana (Azimutal)</h4>
+
+            <p>
+              A projeção é feita sobre um plano tangente à Terra
+              em um ponto específico.
+            </p>
+
+            <p>
+              É bastante utilizada para representar regiões polares.
+              Quanto maior a distância do ponto central, maior a deformação.
+            </p>
+
+            <h4>Limitações das Projeções</h4>
+
+            <p>
+              Nenhuma projeção consegue preservar simultaneamente:
+            </p>
+
+            <ul>
+              <li>Área</li>
+              <li>Forma</li>
+              <li>Distância</li>
+              <li>Ângulos</li>
+            </ul>
+
+            <p>
+              Sempre haverá algum tipo de distorção, pois estamos
+              transformando uma superfície curva (esférica)
+              em uma superfície plana.
+            </p>
+
+            <p>
+              Esse estudo relaciona Geometria Plana com Geografia
+              e aparece frequentemente no ENEM em questões
+              comparativas entre mapas.
+            </p>
+
+            <div class="didactic-note">
+              Critério prático: antes de escolher um mapa, pergunte qual informação é mais importante
+              preservar (área, forma, distância ou direção).
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- TEOREMA DE PITÁGORAS -->
+
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h3 id="teorema-pitagoras">6. Teorema de Pitágoras</h3>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p>
+              O Teorema de Pitágoras é uma relação matemática válida apenas para
+              triângulos retângulos. Ele estabelece uma relação entre o comprimento
+              da hipotenusa e o comprimento dos catetos.
+              Ele conecta os três lados da figura e permite descobrir uma medida desconhecida quando
+              as outras duas são conhecidas.
+            </p>
+
+            <p>
+              Sempre identifique primeiro o ângulo de 90°. O lado oposto a esse ângulo é a
+              <strong>hipotenusa</strong>; os outros dois lados são os <strong>catetos</strong>.
+            </p>
+
+            <p><strong>Fórmula:</strong> c<sup>2</sup> = a<sup>2</sup> + b<sup>2</sup></p>
+            <ul>
+              <li><strong>Hipotenusa:</strong> lado oposto ao ângulo de 90° (maior lado).</li>
+              <li><strong>Catetos:</strong> lados que formam o ângulo reto.</li>
+            </ul>
+
+            <div class="image-placeholder">
+              <img src="Imagens/pitagoras_didatico.png" alt="Aplicação do Teorema de Pitágoras">
+            </div>
+
+            <p><strong>Exemplo guiado:</strong> em um triângulo com catetos 6 e 8, temos:</p>
+            <p>a<sup>2</sup> = 6<sup>2</sup> + 8<sup>2</sup> = 36 + 64 = 100 → a = 10.</p>
+
+            <p>
+              Dica prática: antes de finalizar, confira se a hipotenusa ficou maior que cada cateto.
+              Esse é um bom teste rápido para validar o resultado.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEMELHANÇA DE TRIANGULOS -->
+
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h3 id="classificacao-triangulos">7. Classificação de Triângulos</h3>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p>
+              A classificação de triângulos pode ser feita pelos <strong>lados</strong> e pelos
+              <strong>ângulos</strong>. Esse conhecimento é base para problemas de congruência,
+              semelhança e trigonometria.
+            </p>
+
+            <p>
+              Em qualquer triângulo, a soma dos ângulos internos é sempre 180°. Essa propriedade
+              ajuda a confirmar classificações e resolver questões com dados incompletos.
+            </p>
+
+            <div class="image-placeholder">
+              <img src="Imagens/triangulos_didatico.png" alt="Classificação de triângulos quanto aos lados e ângulos">
+            </div>
+
+            <h4>Quanto aos lados</h4>
+            <ul>
+              <li><strong>Equilátero:</strong> três lados iguais.</li>
+              <li><strong>Isósceles:</strong> dois lados iguais.</li>
+              <li><strong>Escaleno:</strong> três lados diferentes.</li>
+            </ul>
+
+            <h4>Quanto aos ângulos</h4>
+            <ul>
+              <li><strong>Acutângulo:</strong> três ângulos agudos.</li>
+              <li><strong>Retângulo:</strong> um ângulo de 90°.</li>
+              <li><strong>Obtusângulo:</strong> um ângulo maior que 90°.</li>
+            </ul>
+
+            <br>
+
+            <h4>Semelhança entre triângulos</h4>
+          <p>
+            Dois triângulos são semelhantes quando possuem <strong>ângulos correspondentes iguais</strong>
+            e <strong>lados proporcionais</strong>. Essa relação garante que os triângulos têm a
+            mesma forma, mesmo que tenham tamanhos diferentes.
+          </p>
+
+          <p>
+            Os principais critérios para verificar a semelhança são:
+            <strong>AA (ângulo-ângulo)</strong>, <strong>LAL (lado-ângulo-lado)</strong> e
+            <strong>LLL (lado-lado-lado)</strong>.
+          </p>
+
+          <p>
+            Se a razão de semelhança é <strong>k</strong>, então os perímetros variam por
+            <strong>k</strong> e as áreas variam por <strong>k<sup>2</sup></strong>.
+            Esse conceito é muito utilizado em escalas, mapas e medições indiretas.
+          </p>
+
+          <div class="image-placeholder">
+            <img src="Imagens/triangulos_semelhantes_exemplo1.png" alt="Dois triângulos semelhantes com lados proporcionais">
+          </div>
+
+          <p>
+            Na figura acima, podemos observar dois triângulos com a mesma forma geométrica,
+            indicando que os lados correspondentes mantêm sempre a mesma proporção.
+          </p>
+
+          <p><strong>Fórmula da semelhança (lados correspondentes):</strong></p>
+
+          <p>
+            <span class="inline-frac"><span class="num">A'B'</span><span class="den">AB</span></span>
+            =
+            <span class="inline-frac"><span class="num">B'C'</span><span class="den">BC</span></span>
+            =
+            <span class="inline-frac"><span class="num">A'C'</span><span class="den">AC</span></span>
+            = k
+          </p>
+
+          <p>
+            Nessa expressão, cada fração compara <strong>lados correspondentes</strong>
+            entre dois triângulos semelhantes. O valor <strong>k</strong> representa a
+            <strong>constante de proporcionalidade</strong>.
+          </p>
+
+          <p>
+            Interpretação prática: se <strong>k &gt; 1</strong>, o triângulo é uma ampliação
+            do original; se <strong>0 &lt; k &lt; 1</strong>, trata-se de uma redução.
+          </p>
+
+          <div class="image-placeholder">
+            <img src="Imagens/triangulos_semelhantes_exemplo2.png" alt="Triângulos semelhantes com medidas numéricas">
+          </div>
+
+          <p><strong>Exemplo aplicado:</strong></p>
+
+          <p>
+            Considere dois triângulos semelhantes em que
+            AB = 6, BC = 8, AC = 10 e A'B' = 9, B'C' = 12, A'C' = 15.
+          </p>
+
+          <p>
+            <span class="inline-frac"><span class="num">A'B'</span><span class="den">AB</span></span>
+            =
+            <span class="inline-frac"><span class="num">9</span><span class="den">6</span></span>
+            =
+            <span class="inline-frac"><span class="num">3</span><span class="den">2</span></span>
+            ;
+            <span class="inline-frac"><span class="num">B'C'</span><span class="den">BC</span></span>
+            =
+            <span class="inline-frac"><span class="num">12</span><span class="den">8</span></span>
+            =
+            <span class="inline-frac"><span class="num">3</span><span class="den">2</span></span>
+            ;
+            <span class="inline-frac"><span class="num">A'C'</span><span class="den">AC</span></span>
+            =
+            <span class="inline-frac"><span class="num">15</span><span class="den">10</span></span>
+            =
+            <span class="inline-frac"><span class="num">3</span><span class="den">2</span></span>.
+          </p>
+
+          <p>
+            Portanto, a constante de proporcionalidade é
+            <strong>k = 3/2 = 1,5</strong>. Isso significa que cada lado do segundo
+            triângulo mede <strong>1,5 vezes</strong> o lado correspondente do primeiro.
+          </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRANSFORMAÇÕES GEOMÉTRICAS -->
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h3 id="transformacoes-geometricas">8. Transformações Geométricas</h3>
+          <span class="accordion-arrow">▼</span>
+        </div>
+
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+
+            <p>
+              As transformações geométricas permitem modificar a posição, orientação 
+              ou tamanho de uma figura no plano, mantendo ou alterando suas propriedades.
+              Elas são fundamentais para compreender simetria, escalas e construções.
+            </p>
+
+            <h4>Transformações Isométricas</h4>
+            <p>
+              São transformações que preservam forma e tamanho da figura.
+            </p>
+
+            <ul>
+              <li><strong>Translação:</strong> deslocamento da figura sem girar ou deformar.</li>
+              <li><strong>Rotação:</strong> giro da figura em torno de um ponto.</li>
+              <li><strong>Reflexão:</strong> espelhamento em relação a uma reta.</li>
+            </ul>
+
+            <p>
+              Essas transformações são usadas em arquitetura, design gráfico, 
+              logotipos e padrões decorativos.
+            </p>
+
+            <h4>Transformações Homotéticas (Ampliação e Redução)</h4>
+            <p>
+              Quando uma figura é ampliada ou reduzida mantendo a forma, ocorre 
+              uma transformação chamada homotetia.
+            </p>
+
+            <p>
+              Se a razão de escala é <strong>k</strong>:
+            </p>
+
+            <ul>
+              <li>O perímetro é multiplicado por <strong>k</strong>.</li>
+              <li>A área é multiplicada por <strong>k²</strong>.</li>
+            </ul>
+
+            <p>
+              Esse conceito é amplamente aplicado em mapas, maquetes e projetos técnicos.
+            </p>
+
+            <figure class="didactic-figure-transformacoes">
+              <img src="Imagens/transformacoes_geometricas_didatico.svg" alt="Exemplos de translação, rotação, reflexão e homotetia no plano cartesiano">
+              <figcaption>Exemplos visuais de transformações isométricas e homotéticas no plano.</figcaption>
+            </figure>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- LADRILHAMENTO -->
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h3 id="ladrilhamento-plano">9. Ladrilhamento do Plano</h3>
+          <span class="accordion-arrow">▼</span>
+        </div>
+
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+
+            <p>
+              O ladrilhamento do plano ocorre quando figuras geométricas são 
+              organizadas de forma que cubram completamente uma superfície, 
+              sem sobreposições e sem deixar espaços vazios.
+            </p>
+
+            <h4>Polígonos que Ladrilham o Plano Sozinhos</h4>
+            <ul>
+              <li>Triângulos</li>
+              <li>Quadrados</li>
+              <li>Hexágonos regulares</li>
+            </ul>
+
+            <p>
+              Nem todos os polígonos conseguem ladrilhar o plano sozinhos. 
+              Para isso, a soma dos ângulos ao redor de um ponto deve ser 360°.
+            </p>
+
+            <p>
+              Esse conceito é aplicado em pisos, azulejos, mosaicos e 
+              construções arquitetônicas.
+            </p>
+
+            <p>
+              No ENEM, esse conteúdo pode aparecer em problemas envolvendo 
+              revestimento de superfícies ou padrões geométricos.
+            </p>
+
+            <figure class="didactic-figure">
+              <img src="Imagens/ladrilhamento_plano_didatico.png" alt="Padrões de ladrilhamento com triângulos, quadrados e hexágonos">
+              <figcaption>Exemplos de ladrilhamento do plano com polígonos que cobrem a superfície sem lacunas.</figcaption>
+            </figure>
+
+            <div class="didactic-note">
+              Regra-chave: para ladrilhar sem falhas, os ângulos ao redor de um vértice devem somar 360°.
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h3 id="exemplos-pratica">10. Exemplos na Prática</h3>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+          <p>
+            A seguir, são apresentados exemplos práticos que demonstram a aplicação
+            dos principais conceitos da Geometria Plana em diferentes situações.
+          </p>
+
+
+          <h4>Cálculo de Área – Piso de uma Sala</h4>
+
+          <p>
+            Uma sala possui formato retangular, com 8 metros de comprimento
+            e 5 metros de largura. Deseja-se calcular a área total do piso.
+          </p>
+
+          <p><strong>Fórmula da área do retângulo:</strong></p>
+          <p>A = b · h</p>
+
+          <p><strong>Substituindo os valores:</strong></p>
+          <p>A = 8 · 5</p>
+          <p>A = 40 m²</p>
+
+          <p>
+            A área total do piso é de 40 metros quadrados.
+          </p>
+
+
+          <h4>Cálculo de Perímetro – Instalação de Cerca</h4>
+
+          <p>
+            Um terreno possui formato retangular com 20 metros de comprimento
+            e 12 metros de largura. O proprietário deseja cercar todo o terreno.
+            Quantos metros de cerca serão necessários?
+          </p>
+
+          <p><strong>Fórmula do perímetro do retângulo:</strong></p>
+          <p>P = 2(b + h)</p>
+
+          <p><strong>Substituindo:</strong></p>
+          <p>P = 2(20 + 12)</p>
+          <p>P = 2(32)</p>
+          <p>P = 64 m</p>
+
+          <p>
+            Serão necessários 64 metros de cerca.
+          </p>
+
+
+          <h4>Teorema de Pitágoras – Comprimento de uma Escada</h4>
+
+          <p>
+            Uma escada está apoiada em uma parede. A base da escada está a 3 metros
+            da parede, e a altura alcançada é de 4 metros.
+            Qual é o comprimento da escada?
+          </p>
+
+          <p><strong>Teorema de Pitágoras:</strong></p>
+          <p>a² = b² + c²</p>
+
+          <p><strong>Substituindo os valores:</strong></p>
+          <p>a² = 3² + 4²</p>
+          <p>a² = 9 + 16</p>
+          <p>a² = 25</p>
+          <p>a = √25</p>
+          <p>a = 5 m</p>
+
+          <p>
+            O comprimento da escada é de 5 metros.
+          </p>
+
+
+          <h4>Cálculo de Ângulos – Soma dos Ângulos Internos</h4>
+
+          <p>
+            Um terreno possui formato triangular. Dois de seus ângulos medem
+            50° e 60°. Qual é a medida do terceiro ângulo?
+          </p>
+
+          <p><strong>Soma dos ângulos internos de um triângulo:</strong></p>
+          <p>Â₁ + Â₂ + Â₃ = 180°</p>
+
+          <p><strong>Substituindo:</strong></p>
+          <p>50° + 60° + x = 180°</p>
+          <p>110° + x = 180°</p>
+          <p>x = 180° − 110°</p>
+          <p>x = 70°</p>
+
+          <p>
+            O terceiro ângulo mede 70°.
+          </p>
+
+
+          <h4>Situação Combinada – Planejamento de Jardim</h4>
+
+          <p>
+            Um jardim retangular mede 10 metros de comprimento e 6 metros de largura.
+            No centro do jardim será construída uma passarela diagonal ligando
+            dois cantos opostos.
+          </p>
+
+          <p>
+            Determine:
+            <br>
+            a) A área total do jardim.
+            <br>
+            b) O comprimento da passarela diagonal.
+          </p>
+
+          <p><strong>a) Área:</strong></p>
+          <p>A = 10 · 6</p>
+          <p>A = 60 m²</p>
+
+          <p><strong>b) Diagonal (Teorema de Pitágoras):</strong></p>
+          <p>d² = 10² + 6²</p>
+          <p>d² = 100 + 36</p>
+          <p>d² = 136</p>
+          <p>d = √136</p>
+          <p>d ≈ 11,66 m</p>
+
+          <p>
+            A área do jardim é 60 m² e a diagonal mede aproximadamente 11,66 metros.
+          </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ONDE APLICAR -->
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h3 id="onde-aplicar">11. Onde Aplicar</h3>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+           <p>
+            A Geometria Plana está presente em diversas situações do cotidiano. 
+            Seus conceitos são utilizados para medir espaços, calcular áreas, determinar 
+            perímetros e analisar formas em diferentes contextos profissionais e pessoais.
+          </p>
+
+          <h4>Construção Civil e Arquitetura</h4>
+          <p>
+            Na construção de casas, prédios e estruturas, é necessário calcular áreas 
+            de pisos, paredes e terrenos. Formas como retângulos, quadrados e triângulos 
+            são frequentemente utilizadas nos projetos arquitetônicos.
+          </p>
+
+          <div class="image-placeholder">
+            <img src="Imagens/aplicacao_construcao.png" alt="Aplicação da geometria na construção civil">
+          </div>
+
+          <p>
+            O cálculo da área permite determinar a quantidade de materiais necessários, 
+            como pisos, tintas e revestimentos.
+          </p>
+
+          <h4>Design e Engenharia</h4>
+          <p>
+            Profissionais de design gráfico, engenharia e desenho técnico utilizam 
+            figuras geométricas para criar projetos, logotipos, embalagens e peças estruturais.
+            A precisão nas medidas e nos ângulos é essencial para garantir qualidade e funcionalidade.
+          </p>
+
+           <div class="image-placeholder">
+            <img src="Imagens/aplicacao_design.png" alt="Aplicação da geometria no design e engenharia" style="width: 200px; height: 250px;">
+          </div>
+
+
+          <h4>Agricultura e Organização de Terrenos</h4>
+          <p>
+            A Geometria é aplicada na divisão de terrenos, no cálculo de áreas de plantio 
+            e na instalação de cercas. Formas como trapézios e paralelogramos são comuns 
+            em áreas rurais e lotes irregulares.
+          </p>
+
+          <div class="image-placeholder">
+            <img src="Imagens/aplicacao_agricultura.png" alt="Aplicação da geometria em terrenos agrícolas">
+          </div>
+
+          <h4>Situações do Cotidiano</h4>
+          <p>
+            No dia a dia, utilizamos a Geometria ao medir móveis, calcular o espaço 
+            disponível em um ambiente, determinar o tamanho de uma televisão ou 
+            planejar a disposição de objetos em um cômodo.
+          </p>
+
+          <div class="image-placeholder">
+            <img src="Imagens/aplicacao_cotidiano.png" alt="Aplicação da geometria no cotidiano">
+          </div>
+
+          <p>
+            Dessa forma, a Geometria Plana não se limita ao ambiente escolar, 
+            mas constitui uma ferramenta prática e essencial para diversas áreas 
+            do conhecimento e da vida cotidiana.
+          </p>
+
+
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h3 id="erros-dificuldades">12. Principais Erros e Dificuldades</h3>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p>
+              Em Geometria Plana, muitos erros acontecem por distração na leitura ou escolha inadequada
+              da fórmula. Identificar esses padrões ajuda a melhorar muito o desempenho.
+            </p>
+            <ul>
+              <li><strong>Confundir área com perímetro:</strong> área mede superfície (unidades quadradas) e perímetro mede contorno (unidades lineares).</li>
+              <li><strong>Usar fórmula incorreta:</strong> aplicar fórmula de triângulo em trapézio, ou esquecer que no círculo há uso de π.</li>
+              <li><strong>Ignorar unidades:</strong> somar cm com m sem conversão prévia.</li>
+              <li><strong>Erro na altura:</strong> em triângulos e trapézios, usar lado inclinado no lugar da altura perpendicular.</li>
+              <li><strong>Falta de interpretação:</strong> calcular corretamente, mas responder uma grandeza diferente da pedida.</li>
+              <li><strong>Arredondamento precoce:</strong> aproximar valores muito cedo e perder precisão no resultado final.</li>
+            </ul>
+            <br>
+            <p><strong>Estratégia de conferência (passo a passo):</strong></p>
+            <ol>
+              <li>Identifique qual grandeza a questão pede (área, perímetro, ângulo, diagonal).</li>
+              <li>Selecione a fórmula e destaque os dados no enunciado.</li>
+              <li>Substitua valores com atenção às unidades.</li>
+              <li>Valide o resultado: ordem de grandeza e unidade final.</li>
+              <li>Escreva uma conclusão curta e objetiva.</li>
+            </ol>
+
+            <p>
+              Quanto mais organizado estiver o raciocínio, menor a chance de erro e maior a confiança
+              para resolver exercícios mais complexos.
+            </p>
+          </div>
+        </div>
+      </div>
+
+       <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h3 id="enem">13. Para o Exame Nacional de Ensino Médio (ENEM)</h3>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p>
+              No ENEM, Geometria Plana aparece em problemas contextualizados envolvendo plantas,
+              pisos, mapas, rampas, embalagens e gráficos. A prova exige leitura atenta e escolha
+              da estratégia adequada, e não apenas memorização de fórmulas.
+            </p>
+
+            <p><strong>Tópicos mais recorrentes:</strong></p>
+            <ul>
+              <li>Áreas e perímetros de figuras planas (triângulo, retângulo, trapézio, círculo).</li>
+              <li>Relações métricas em triângulos e Teorema de Pitágoras.</li>
+              <li>Soma de ângulos internos/externos de polígonos.</li>
+              <li>Semelhança de triângulos, proporcionalidade e escala.</li>
+            </ul>
+            <br>
+            <p><strong>Roteiro prático para resolver questões:</strong></p>
+            <ol>
+              <li>Leia o comando final primeiro e destaque o que deve ser encontrado.</li>
+              <li>Marque dados numéricos e unidades na figura/enunciado.</li>
+              <li>Escolha a fórmula ou propriedade geométrica adequada.</li>
+              <li>Resolva por etapas e mantenha a organização dos cálculos.</li>
+              <li>Confira plausibilidade do resultado e unidade da resposta.</li>
+            </ol>
+            <br>
+            <p><strong>Dicas de estudo contínuo:</strong></p>
+            <ul>
+              <li>Resolver questões variadas e explicar em voz alta a estratégia usada.</li>
+              <li>Comparar diferentes formas de solução para o mesmo problema.</li>
+              <li>Usar esquemas e desenhos para visualizar melhor os dados do enunciado.</li>
+              <li>Montar um resumo com fórmulas, unidades e exemplos clássicos de aplicação.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+     
+     <!-- BNCC -->
+    <div class="accordion-section">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <h3 id="grade-bncc">14. Grade BNCC</h3>
+        <span class="accordion-arrow">▼</span>
+      </div>
+
+      <div class="accordion-content">
+        <div class="accordion-content-inner">
+          
+          <p>
+            Este conteúdo foi desenvolvido com base nas habilidades da 
+            Base Nacional Comum Curricular (BNCC), documento normativo do 
+            Ministério da Educação do Brasil, estando alinhado aos seguintes 
+            códigos do Ensino Médio:
+          </p>
+
+          <ul class="bncc-list">
+            <li><button type="button" class="bncc-btn" data-bncc-code="EM13MAT201">EM13MAT201</button></li>
+            <li><button type="button" class="bncc-btn" data-bncc-code="EM13MAT307">EM13MAT307</button></li>
+            <li><button type="button" class="bncc-btn" data-bncc-code="EM13MAT105">EM13MAT105</button></li>
+            <li><button type="button" class="bncc-btn" data-bncc-code="EM13MAT308">EM13MAT308</button></li>
+            <li><button type="button" class="bncc-btn" data-bncc-code="EM13MAT505">EM13MAT505</button></li>
+            <li><button type="button" class="bncc-btn" data-bncc-code="EM13MAT506">EM13MAT506</button></li>
+          </ul>
+
+          <p>
+            <span class="bncc-ref-title">Referência oficial:</span>
+            <br>
+
+            Portal oficial navegável da BNCC:
+            <br>
+            <a class="bncc-ref-link" 
+              href="https://basenacionalcomum.mec.gov.br/abase/" 
+              target="_blank" 
+              rel="noopener noreferrer">
+              https://basenacionalcomum.mec.gov.br/abase/
+            </a>
+            <br>
+            Versão completa em PDF:
+            <br>
+            <a class="bncc-ref-link" 
+              href="https://basenacionalcomum.mec.gov.br/images/BNCC_EI_EF_110518_versaofinal_site.pdf?" 
+              target="_blank" 
+              rel="noopener noreferrer">
+             https://basenacionalcomum.mec.gov.br/images/BNCC_EI_EF_110518_versaofinal_site.pdf?
+            </a>
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DAS HABILIDADES DA BNCC -->
+    <div id="bnccModal" class="bncc-modal" aria-hidden="true">
+      <div class="bncc-modal-content" role="dialog" aria-modal="true" aria-labelledby="bnccModalTitle">
+        <div class="bncc-modal-header">
+          <h4 id="bnccModalTitle">Código BNCC</h4>
+          <button type="button" class="bncc-close" id="bnccModalClose" aria-label="Fechar modal">&times;</button>
+        </div>
+        <div class="bncc-modal-body" id="bnccModalBody"></div>
+        <div class="bncc-modal-footer">Base Nacional Comum Curricular (MEC)</div>
+      </div>
+    </div>
+
+    <div class="author-box" aria-label="Autoria do conteúdo">
+      <div class="author-text">
+        <p><strong>Feito pela equipe BrainForms</strong></p>
+        <p>Escrito por: Luiz Felipe Freitas Santos</p>
+      </div>
+      <div class="author-brand" aria-label="Marca BrainForms">
+        <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms">
+        <span>BrainForms</span>
+      </div>
+    </div>
+
+      
+    </div>
+  </div>
+  </section>
+
+  <footer class="footer-desktop">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms">
+          <span>BrainForms</span>
+        </div>
+        <p>Plataforma educacional dedicada ao ensino de Matemática e Física, oferecendo conteúdos didáticos, calculadoras interativas e exercícios práticos.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Copyright &copy; 2026 BrainForms. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/info-button.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/theme-manager.js"></script>
+</body>
+</html>
+

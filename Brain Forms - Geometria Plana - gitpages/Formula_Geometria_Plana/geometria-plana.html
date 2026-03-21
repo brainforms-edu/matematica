@@ -1,0 +1,356 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fórmulas de Geometria Plana | BrainForms</title>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="icon" href="Imagens/Logo sem Fundo.png" type="image/png">
+<link rel="stylesheet" href="css/geometria-plana.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="../Conteudo_Geometria_Plana/index.html" class="navbar-logo">
+      <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms">
+      <span>BrainForms</span>
+    </a>
+  </nav>
+
+  <nav class="breadcrumb" aria-label="Navegação rápida">
+    <div class="crumbs" role="navigation">
+      <a href="../Conteudo_Geometria_Plana/index.html" class="item">Conteúdo</a>
+      <span class="sep">/</span>
+      <a href="geometria-plana.html" class="item" aria-current="page">Fórmulas</a>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="hero-section">
+      <h1>Geometria Plana</h1>
+    </div>
+
+    <div class="def-container-desktop">
+      <h2>Definição</h2>
+      <img src="Imagens/geometriaplana.png" alt="geometria plana">
+      <div class="explicacao" id="explicacaoTextoDesktop" aria-live="polite" aria-atomic="true">
+        <strong>Perímetro de Polígono Regular</strong>
+        <p>O perímetro é a soma de todos os lados de um polígono. Em polígonos regulares os lados têm o mesmo comprimento.</p>
+        <p><span class="label-colon">Fórmula:</span> <span class="formula">P = n × a</span></p>
+        <p><span class="label-colon">Variáveis:</span> n = quantidade de lados (n ≥ 3), a = medida de cada lado.</p>
+        <p><span class="label-colon">Dica:</span> confirme a unidade de medida; mantenha n inteiro.</p>
+      </div>
+    </div>
+
+    <div class="direita">
+      <button class="info-btn"
+        data-info="Geometria plana estuda figuras em 2D. Comece pelo perímetro, avance para áreas, relações de semelhança e feche com o Teorema de Pitágoras."
+        onclick="showInfo(this)">
+        <img src="Imagens/info.png" alt="Informação">
+      </button>
+    </div>
+
+    <div class="calculo-desktop">
+      <h2 class="titulo-calculo-desktop" id="tituloFormulaDesktop">Perímetro de Polígono Regular</h2>
+      <div class="dropdown-container-desktop">
+        <div class="dropdown-desktop">
+          <div class="dropdown-button-desktop" id="dropdownButtonDesktop" onclick="toggleDropdownDesktop(event)">
+            Perímetro de Polígono Regular
+            <i class="arrow-desktop" id="arrowIconDesktop">▼</i>
+          </div>
+          <div class="dropdown-content-desktop" id="dropdownContentDesktop" role="menu" aria-label="Lista de cálculos">
+            <button role="menuitem" onclick="mostrarFormularioDesktop('perimetro')">Perímetro de Polígono Regular</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('areaQuadrado')">Área do Quadrado</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('areaRetangulo')">Área do Retângulo</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('perimetroRetangulo')">Perímetro do Retângulo</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('areaCirculo')">Área do Círculo</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('perimetroCirculo')">Perímetro do Círculo</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('areaTriangulo')">Área do Triângulo</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('semelhanca')">Semelhança de Triângulos</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('pitagoras')">Teorema de Pitágoras</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-header-desktop">
+        <h6>Insira os valores para o cálculo:</h6>
+      </div>
+
+      <form id="perimetroFormDesktop" class="calculo-form-desktop active" onsubmit="event.preventDefault(); calcularPerimetroDesktop();">
+        <input type="number" id="ladosPerimetroDesktop" placeholder="Quantidade de lados (n ≥ 3)" min="3" step="1" required />
+        <input type="number" id="medidaLadoDesktop" placeholder="Medida de cada lado" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaQuadradoFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularAreaQuadradoDesktop();">
+        <input type="number" id="ladoQuadradoDesktop" placeholder="Medida do lado" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaRetanguloFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularAreaRetanguloDesktop();">
+        <input type="number" id="baseRetanguloDesktop" placeholder="Base" min="0" step="0.01" required />
+        <input type="number" id="alturaRetanguloDesktop" placeholder="Altura" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="perimetroRetanguloFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularPerimetroRetanguloDesktop();">
+        <input type="number" id="basePerimetroRetanguloDesktop" placeholder="Base" min="0" step="0.01" required />
+        <input type="number" id="alturaPerimetroRetanguloDesktop" placeholder="Altura" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaCirculoFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularAreaCirculoDesktop();">
+        <input type="number" id="raioCirculoDesktop" placeholder="Raio" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="perimetroCirculoFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularPerimetroCirculoDesktop();">
+        <input type="number" id="raioPerimetroCirculoDesktop" placeholder="Raio" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaTrianguloFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularAreaTrianguloDesktop();">
+        <input type="number" id="baseTrianguloDesktop" placeholder="Base" min="0" step="0.01" required />
+        <input type="number" id="alturaTrianguloDesktop" placeholder="Altura" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="semelhancaFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularSemelhancaDesktop();">
+        <input type="number" id="ladoMenorDesktop" placeholder="Lado do triângulo de referência" min="0" step="0.01" required />
+        <input type="number" id="ladoMaiorDesktop" placeholder="Lado correspondente no outro triângulo" min="0" step="0.01" required />
+        <input type="number" id="areaReferencialDesktop" placeholder="Área conhecida (opcional)" min="0" step="0.01" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="pitagorasFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularPitagorasDesktop();">
+        <input type="number" id="catetoADesktop" placeholder="Cateto a" min="0" step="0.01" required />
+        <input type="number" id="catetoBDesktop" placeholder="Cateto b" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+    </div>
+
+    <div id="resultado-desktop">
+      <h2>Resultado</h2>
+      <p id="mensagemResultadoDesktop"></p>
+      <h3>Resolução passo a passo:</h3>
+      <div id="passoAPassoDesktop"></div>
+    </div>
+  </section>
+
+  <!-- MOBILE -->
+  <div class="container" role="main" aria-label="Calculadora de Geometria Plana BrainForms">
+    <div class="header-container">
+      <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms" />
+      <h3><a href="../Conteudo_Geometria_Plana/index.html">BrainForms</a></h3>
+    </div>
+
+    <div class="header-section">
+      <a href="javascript:history.back()" class="back-btn"><span>&times;</span></a>
+      <h2>Geometria Plana</h2>
+    </div>
+
+    <div class="content">
+      <div class="def-container">
+        <h2 id="def">Definição</h2>
+        <img id="def-img" src="Imagens/geometriaplana.png" alt="geometria plana">
+        <div class="explicacao" id="explicacaoTexto" aria-live="polite" aria-atomic="true">
+          <strong>Perímetro de Polígono Regular</strong>
+          <p>O perímetro é a soma de todos os lados de um polígono. Em polígonos regulares os lados têm o mesmo comprimento.</p>
+          <p><span class="label-colon">Fórmula:</span> <span class="formula">P = n × a</span></p>
+          <p><span class="label-colon">Variáveis:</span> n = quantidade de lados (n ≥ 3), a = medida de cada lado.</p>
+          <p><span class="label-colon">Dica:</span> confirme a unidade de medida; mantenha n inteiro.</p>
+        </div>
+      </div>
+
+      <div class="dropdown-container">
+        <div class="dropdown" style="margin-left:auto;">
+          <div class="dropdown-button" id="dropdownButton" tabindex="0" aria-haspopup="true" aria-expanded="false">
+            Perímetro de Polígono Regular
+            <i class="arrow" id="arrowIcon"></i>
+          </div>
+          <div class="dropdown-content" id="dropdownContent" role="menu" aria-label="Lista de cálculos">
+            <button role="menuitem" data-form="perimetroForm">Perímetro de Polígono Regular</button>
+            <button role="menuitem" data-form="areaQuadradoForm">Área do Quadrado</button>
+            <button role="menuitem" data-form="areaRetanguloForm">Área do Retângulo</button>
+            <button role="menuitem" data-form="perimetroRetanguloForm">Perímetro do Retângulo</button>
+            <button role="menuitem" data-form="areaCirculoForm">Área do Círculo</button>
+            <button role="menuitem" data-form="perimetroCirculoForm">Perímetro do Círculo</button>
+            <button role="menuitem" data-form="areaTrianguloForm">Área do Triângulo</button>
+            <button role="menuitem" data-form="semelhancaForm">Semelhança de Triângulos</button>
+            <button role="menuitem" data-form="pitagorasForm">Teorema de Pitágoras</button>
+          </div>
+        </div>
+      </div>
+
+      <form id="perimetroForm" class="calculo-form active calculo" aria-label="Calcular perímetro de polígono regular" onsubmit="event.preventDefault(); calcularPerimetro();">
+        <h2>Perímetro de Polígono Regular</h2>
+        <div class="input-header">
+          <h6>Insira os valores para o cálculo</h6>
+          <div class="direita">
+            <button type="button" class="info-btn"
+              data-info="Para polígonos regulares use a fórmula P = n × a. Informe o número de lados (n) e a medida de cada lado (a)."
+              onclick="showInfo(this)">
+              <img src="Imagens/info.png" alt="Informação">
+            </button>
+          </div>
+        </div>
+        <input type="number" id="ladosPerimetro" placeholder="Quantidade de lados (n ≥ 3)" min="3" step="1" aria-required="true" />
+        <input type="number" id="medidaLado" placeholder="Medida de cada lado" min="0" step="0.01" aria-required="true" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaQuadradoForm" class="calculo-form calculo" aria-label="Calcular área do quadrado" onsubmit="event.preventDefault(); calcularAreaQuadrado();">
+        <h2>Área do Quadrado</h2>
+        <div class="input-header">
+          <h6>Insira os valores para o cálculo</h6>
+          <div class="direita">
+            <button type="button" class="info-btn"
+              data-info="Área do quadrado: A = lado². Basta informar o comprimento do lado." 
+              onclick="showInfo(this)">
+              <img src="Imagens/info.png" alt="Informação">
+            </button>
+          </div>
+        </div>
+        <input type="number" id="ladoQuadrado" placeholder="Medida do lado" min="0" step="0.01" aria-required="true" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaRetanguloForm" class="calculo-form calculo" aria-label="Calcular área do retângulo" onsubmit="event.preventDefault(); calcularAreaRetangulo();">
+        <h2>Área do Retângulo</h2>
+        <div class="input-header">
+          <h6>Insira os valores para o cálculo</h6>
+          <div class="direita">
+            <button type="button" class="info-btn"
+              data-info="Área de retângulo: A = b × h. Informe base e altura na mesma unidade."
+              onclick="showInfo(this)">
+              <img src="Imagens/info.png" alt="Informação">
+            </button>
+          </div>
+        </div>
+        <input type="number" id="baseRetangulo" placeholder="Base" min="0" step="0.01" aria-required="true" />
+        <input type="number" id="alturaRetangulo" placeholder="Altura" min="0" step="0.01" aria-required="true" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="perimetroRetanguloForm" class="calculo-form calculo" aria-label="Calcular perímetro do retângulo" onsubmit="event.preventDefault(); calcularPerimetroRetangulo();">
+        <h2>Perímetro do Retângulo</h2>
+        <div class="input-header">
+          <h6>Insira os valores para o cálculo</h6>
+          <div class="direita">
+            <button type="button" class="info-btn"
+              data-info="Perímetro do retângulo: P = 2 × (base + altura). Informe base e altura na mesma unidade." 
+              onclick="showInfo(this)">
+              <img src="Imagens/info.png" alt="Informação">
+            </button>
+          </div>
+        </div>
+        <input type="number" id="basePerimetroRetangulo" placeholder="Base" min="0" step="0.01" aria-required="true" />
+        <input type="number" id="alturaPerimetroRetangulo" placeholder="Altura" min="0" step="0.01" aria-required="true" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaCirculoForm" class="calculo-form calculo" aria-label="Calcular área do círculo" onsubmit="event.preventDefault(); calcularAreaCirculo();">
+        <h2>Área do Círculo</h2>
+        <div class="input-header">
+          <h6>Insira os valores para o cálculo</h6>
+          <div class="direita">
+            <button type="button" class="info-btn"
+              data-info="Área do círculo: A = π × r². Informe o raio na mesma unidade desejada para a área."
+              onclick="showInfo(this)">
+              <img src="Imagens/info.png" alt="Informação">
+            </button>
+          </div>
+        </div>
+        <input type="number" id="raioCirculo" placeholder="Raio" min="0" step="0.01" aria-required="true" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="perimetroCirculoForm" class="calculo-form calculo" aria-label="Calcular perímetro do círculo" onsubmit="event.preventDefault(); calcularPerimetroCirculo();">
+        <h2>Perímetro do Círculo</h2>
+        <div class="input-header">
+          <h6>Insira os valores para o cálculo</h6>
+          <div class="direita">
+            <button type="button" class="info-btn"
+              data-info="Perímetro (circunferência) do círculo: P = 2 × π × r. Informe o raio na unidade desejada." 
+              onclick="showInfo(this)">
+              <img src="Imagens/info.png" alt="Informação">
+            </button>
+          </div>
+        </div>
+        <input type="number" id="raioPerimetroCirculo" placeholder="Raio" min="0" step="0.01" aria-required="true" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaTrianguloForm" class="calculo-form calculo" aria-label="Calcular área do triângulo" onsubmit="event.preventDefault(); calcularAreaTriangulo();">
+        <h2>Área do Triângulo</h2>
+        <div class="input-header">
+          <h6>Insira os valores para o cálculo</h6>
+          <div class="direita">
+            <button type="button" class="info-btn"
+              data-info="Área do triângulo: A = (b × h) / 2. Informe base e altura em mesma unidade."
+              onclick="showInfo(this)">
+              <img src="Imagens/info.png" alt="Informação">
+            </button>
+          </div>
+        </div>
+        <input type="number" id="baseTriangulo" placeholder="Base" min="0" step="0.01" aria-required="true" />
+        <input type="number" id="alturaTriangulo" placeholder="Altura" min="0" step="0.01" aria-required="true" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="semelhancaForm" class="calculo-form calculo" aria-label="Calcular razão de semelhança de triângulos" onsubmit="event.preventDefault(); calcularSemelhanca();">
+        <h2>Semelhança de Triângulos</h2>
+        <div class="input-header">
+          <h6>Insira os valores para o cálculo</h6>
+          <div class="direita">
+            <button type="button" class="info-btn"
+              data-info="Razão de semelhança k = lado correspondente ÷ lado de referência. Áreas variam por k². Informe um lado de cada triângulo e, se tiver, a área do triângulo de referência para projetar a outra."
+              onclick="showInfo(this)">
+              <img src="Imagens/info.png" alt="Informação">
+            </button>
+          </div>
+        </div>
+        <input type="number" id="ladoMenor" placeholder="Lado do triângulo de referência" min="0" step="0.01" aria-required="true" />
+        <input type="number" id="ladoMaior" placeholder="Lado correspondente no outro triângulo" min="0" step="0.01" aria-required="true" />
+        <input type="number" id="areaReferencial" placeholder="Área conhecida (opcional)" min="0" step="0.01" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="pitagorasForm" class="calculo-form calculo" aria-label="Calcular hipotenusa pelo Teorema de Pitágoras" onsubmit="event.preventDefault(); calcularPitagoras();">
+        <h2>Teorema de Pitágoras</h2>
+        <div class="input-header">
+          <h6>Insira os valores para o cálculo</h6>
+          <div class="direita">
+            <button type="button" class="info-btn"
+              data-info="Em triângulos retângulos: c² = a² + b². Informe os catetos para encontrar a hipotenusa."
+              onclick="showInfo(this)">
+              <img src="Imagens/info.png" alt="Informação">
+            </button>
+          </div>
+        </div>
+        <input type="number" id="catetoA" placeholder="Cateto a" min="0" step="0.01" aria-required="true" />
+        <input type="number" id="catetoB" placeholder="Cateto b" min="0" step="0.01" aria-required="true" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <section id="resultado" role="region" aria-live="polite" aria-atomic="true">
+        <h3>Resultado</h3>
+        <div id="saidaResultado"></div>
+      </section>
+    </div>
+
+    <div class="footer">
+      <a href="../Conteudo_Geometria_Plana/index.html">
+        <img src="Imagens/inicio.png" alt="Início">
+      </a>
+    </div>
+  </div>
+
+<script src="js/info-button.js"></script>
+<script src="js/conquistas-utils.js"></script>
+<script src="js/historico-formulas.js"></script>
+<script src="js/geometria-plana.js"></script>
+<script src="js/theme-manager.js"></script>
+<script src="js/geometria-plana-mobile-fix.js"></script>
+</body>
+</html>
+
