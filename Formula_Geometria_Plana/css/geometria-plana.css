@@ -251,7 +251,8 @@ body {
 .dropdown-container-desktop {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 20px;
+  margin-top: 16px;
+  margin-bottom: 24px;
 }
 
 .dropdown-desktop {
@@ -360,6 +361,78 @@ body {
   border-radius: 8px;
   margin-bottom: 14px;
   background: #fff;
+}
+
+/* Remove as setinhas dos inputs numéricos */
+.calculo-form-desktop input[type="number"]::-webkit-outer-spin-button,
+.calculo-form-desktop input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.calculo-form-desktop input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.input-unit-row {
+  display: grid;
+  grid-template-columns: 1fr 106px;
+  gap: 8px;
+  align-items: stretch;
+  margin-bottom: 14px;
+}
+
+.input-unit-row input[type="number"] {
+  margin-bottom: 0;
+}
+
+.unit-select {
+  width: 100%;
+  min-width: 0;
+  padding: 14px 10px;
+  font-size: 17px;
+  line-height: 1.2;
+  min-height: 52px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  color: #5E097E;
+  font-weight: 400;
+}
+
+.unit-select option {
+  font-weight: 400;
+}
+
+.output-unit-row {
+  display: block;
+  margin: 0;
+}
+
+.output-unit-label {
+  display: block;
+  color: #5E097E;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 30px 0 6px;
+}
+
+.output-unit-row .unit-select {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.unit-select:focus {
+  border-color: #5E097E;
+  box-shadow: 0 0 5px #5E097E;
+  outline: none;
+}
+
+.unit-select:active {
+  border-color: #5E097E;
+  box-shadow: 0 0 5px #5E097E;
 }
 
 .calculo-form-desktop input[type="number"]:focus {
@@ -474,11 +547,16 @@ body {
 
   .hero-section {
     margin-bottom: 18px;
+    margin-top: 20px;
+    margin-left: 0px;
+    margin-bottom: 20px;
   }
 
   .hero-section h1 {
     font-size: 24px;
   }
+
+
 
   .def-container-desktop h2 {
     left: 14px;
@@ -515,7 +593,8 @@ body {
   }
 
   .dropdown-container-desktop {
-    margin-bottom: 14px;
+    margin-top: 14px;
+    margin-bottom: 20px;
   }
 
   .dropdown-button-desktop {
@@ -545,6 +624,24 @@ body {
     padding: 12px;
     font-size: 15px;
     margin-bottom: 12px;
+    height: 46px;
+  }
+
+  .unit-select {
+    padding: 0 8px;
+    font-size: 15px;
+    height: 46px;
+    min-height: 46px;
+    line-height: 46px;
+  }
+
+  .input-unit-row {
+    grid-template-columns: 1fr 94px;
+  }
+
+  .output-unit-label {
+    font-size: 13px;
+    margin: 0;
   }
 
   .calc-btn {
@@ -574,12 +671,25 @@ body {
    MINI TABLETS (RETRATO)
    ================================================ */
 @media (min-width: 481px) and (max-width: 900px) and (orientation: portrait) {
+  :root {
+    --layout-gutter: clamp(10px, 2.2vw, 20px);
+    --content-max-width: 980px;
+  }
+
   .section {
-    width: min(900px, calc(100vw - (var(--layout-gutter) * 2)));
+    width: min(var(--content-max-width), calc(100vw - (var(--layout-gutter) * 2)));
   }
 
   .hero-section {
     margin-bottom: 22px;
+     margin-top: 20px;
+    margin-left: 0px;
+    margin-bottom: 20px;
+  }
+
+  .dropdown-container-desktop {
+    margin-top: 15px;
+    margin-bottom: 21px;
   }
 }
 
@@ -588,19 +698,51 @@ body {
    ================================================ */
 @media (min-width: 901px) and (max-width: 1200px) {
   :root {
-    --layout-gutter: clamp(14px, 2.8vw, 34px);
-    --content-max-width: 760px;
+    --layout-gutter: clamp(10px, 1.8vw, 22px);
+    --content-max-width: 980px;
   }
 
   .section {
     width: min(var(--content-max-width), calc(100vw - (var(--layout-gutter) * 2)));
   }
 
+  .hero-section{
+    margin-top: 30px;
+    margin-left: 0px;
+    margin-bottom: 30px;
+  }
+
+  .hero-section h1 {
+    font-size: clamp(2.2rem, 3.1vw, 3.25rem);
+  }
+
+  .explicacao {
+    font-size: 1.08rem;
+  }
+
+  .titulo-calculo-desktop {
+    font-size: 1.6rem;
+  }
+
+  .dropdown-container-desktop {
+    margin-top: 16px;
+    margin-bottom: 22px;
+  }
+
   .dropdown-button-desktop {
-    font-size: 16px;
+    font-size: 17px;
   }
 
   .input-header-desktop h6 {
+    font-size: 18px;
+  }
+
+  .calculo-form-desktop input[type="number"],
+  .calc-btn {
+    font-size: 18px;
+  }
+
+  #resultado-desktop p {
     font-size: 17px;
   }
 }
@@ -612,6 +754,11 @@ body {
   :root {
     --layout-gutter: clamp(28px, 5vw, 110px);
     --content-max-width: 980px;
+  }
+
+  .dropdown-container-desktop {
+    margin-top: 18px;
+    margin-bottom: 26px;
   }
 
   .section {

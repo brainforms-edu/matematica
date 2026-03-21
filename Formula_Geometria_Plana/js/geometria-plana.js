@@ -12,6 +12,181 @@ const formatEq = (value, decimals = 2) => {
 
 const getRawField = (id) => document.getElementById(id)?.value?.trim() ?? '';
 
+const LENGTH_TO_CM = { mm: 0.1, cm: 1, m: 100 };
+const FORM_RESULT_KIND = {
+  perimetroFormDesktop: 'length',
+  areaQuadradoFormDesktop: 'area',
+  areaRetanguloFormDesktop: 'area',
+  perimetroRetanguloFormDesktop: 'length',
+  areaCirculoFormDesktop: 'area',
+  perimetroCirculoFormDesktop: 'length',
+  areaTrianguloFormDesktop: 'area',
+  areaParalelogramoFormDesktop: 'area',
+  areaLosangoFormDesktop: 'area',
+  areaTrapezioFormDesktop: 'area',
+  semelhancaFormDesktop: 'mixed',
+  pitagorasFormDesktop: 'length'
+};
+
+const INPUTS_WITHOUT_UNIT = new Set(['ladosPerimetroDesktop']);
+
+function convertLengthToCm(value, unit) {
+  return value * (LENGTH_TO_CM[unit] || 1);
+}
+
+function convertCmToLength(valueCm, unit) {
+  return valueCm / (LENGTH_TO_CM[unit] || 1);
+}
+
+function convertAreaToCm2(value, unit) {
+  const factor = LENGTH_TO_CM[unit] || 1;
+  return value * factor * factor;
+}
+
+function convertCm2ToArea(valueCm2, unit) {
+  const factor = LENGTH_TO_CM[unit] || 1;
+  return valueCm2 / (factor * factor);
+}
+
+function getInputUnit(id) {
+  return document.getElementById(`${id}Unit`)?.value || 'cm';
+}
+
+function getOutputUnitForForm(formId) {
+  return document.getElementById(`${formId}OutputUnit`)?.value || 'cm';
+}
+
+function formatWithUnit(value, unit, isArea = false, decimals = 4) {
+  const suffix = isArea ? `${unit}²` : unit;
+  if (!Number.isFinite(value)) return `— ${suffix}`;
+  return `${formatEq(value, decimals)} ${suffix}`;
+}
+
+function readRequiredLengthInput(id, alertMessage) {
+  const raw = parseFloat(document.getElementById(id)?.value);
+  const unit = getInputUnit(id);
+  if (!Number.isFinite(raw) || raw <= 0) {
+    alert(alertMessage);
+    return null;
+  }
+  return {
+    raw,
+    unit,
+    cm: convertLengthToCm(raw, unit)
+  };
+}
+
+function readOptionalLengthInput(id) {
+  const rawText = getRawField(id);
+  if (!rawText) {
+    return { provided: false, raw: NaN, unit: getInputUnit(id), cm: NaN };
+  }
+  const raw = parseFloat(rawText);
+  const unit = getInputUnit(id);
+  if (!Number.isFinite(raw) || raw <= 0) {
+    return { provided: false, raw: NaN, unit, cm: NaN };
+  }
+  return { provided: true, raw, unit, cm: convertLengthToCm(raw, unit) };
+}
+
+function readOptionalAreaInput(id) {
+  const rawText = getRawField(id);
+  if (!rawText) {
+    return { provided: false, raw: NaN, unit: getInputUnit(id), cm2: NaN };
+  }
+  const raw = parseFloat(rawText);
+  const unit = getInputUnit(id);
+  if (!Number.isFinite(raw) || raw <= 0) {
+    return { provided: false, raw: NaN, unit, cm2: NaN };
+  }
+  return { provided: true, raw, unit, cm2: convertAreaToCm2(raw, unit) };
+}
+
+function conversionStepLength(symbol, data) {
+  if (!data || data.unit === 'cm') return '';
+  return `<p><strong>Conversão:</strong> ${symbol} = ${data.raw.toFixed(2)} ${data.unit} = ${data.cm.toFixed(2)} cm.</p>`;
+}
+
+function conversionStepArea(symbol, data) {
+  if (!data || !data.provided || data.unit === 'cm') return '';
+  return `<p><strong>Conversão:</strong> ${symbol} = ${data.raw.toFixed(2)} ${data.unit}² = ${data.cm2.toFixed(2)} cm².</p>`;
+}
+
+function conversionResultStepLength(symbol, valueCm, outputUnit) {
+  if (outputUnit === 'cm') return '';
+  const converted = convertCmToLength(valueCm, outputUnit);
+  return `<p><strong>Conversão final:</strong> ${symbol} = ${valueCm.toFixed(4)} cm = ${converted.toFixed(4)} ${outputUnit}.</p>`;
+}
+
+function conversionResultStepArea(symbol, valueCm2, outputUnit) {
+  if (outputUnit === 'cm') return '';
+  const converted = convertCm2ToArea(valueCm2, outputUnit);
+  return `<p><strong>Conversão final:</strong> ${symbol} = ${valueCm2.toFixed(4)} cm² = ${converted.toFixed(4)} ${outputUnit}².</p>`;
+}
+
+function buildUnitSelect(id, ariaLabel, verbose = false) {
+  const select = document.createElement('select');
+  select.id = id;
+  select.className = 'unit-select';
+  select.setAttribute('aria-label', ariaLabel);
+  if (verbose) {
+    select.innerHTML = `
+      <option value="mm">Milimetro (mm)</option>
+      <option value="cm" selected>Centimetro (cm)</option>
+      <option value="m">Metro (m)</option>
+    `;
+  } else {
+    select.innerHTML = `
+      <option value="mm">mm</option>
+      <option value="cm" selected>cm</option>
+      <option value="m">m</option>
+    `;
+  }
+  return select;
+}
+
+function aplicarUnidadesNosInputs() {
+  const formsDesktop = document.querySelectorAll('.calculo-form-desktop');
+
+  formsDesktop.forEach((form) => {
+    const inputs = form.querySelectorAll('input[type="number"]');
+    inputs.forEach((input) => {
+      if (!input.id || INPUTS_WITHOUT_UNIT.has(input.id)) return;
+      if (document.getElementById(`${input.id}Unit`)) return;
+
+      const row = document.createElement('div');
+      row.className = 'input-unit-row';
+      input.parentNode.insertBefore(row, input);
+      row.appendChild(input);
+
+      const select = buildUnitSelect(`${input.id}Unit`, `Unidade para ${input.id}`);
+      row.appendChild(select);
+    });
+
+    const submitButton = form.querySelector('.calc-btn');
+    if (!submitButton) return;
+    if (document.getElementById(`${form.id}OutputUnit`)) return;
+
+    const outputRow = document.createElement('div');
+    outputRow.className = 'output-unit-row';
+
+    const outputLabel = document.createElement('label');
+    outputLabel.className = 'output-unit-label';
+    outputLabel.setAttribute('for', `${form.id}OutputUnit`);
+    outputLabel.textContent = 'Unidade do resultado';
+
+    const outputSelect = buildUnitSelect(
+      `${form.id}OutputUnit`,
+      `Unidade do resultado para ${form.id}`,
+      true
+    );
+
+    outputRow.appendChild(outputLabel);
+    outputRow.appendChild(outputSelect);
+    submitButton.parentNode.insertBefore(outputRow, submitButton);
+  });
+}
+
 function aplicarLabelsSimples() {
   const inputs = document.querySelectorAll('.calculo-form-desktop input');
 
@@ -230,6 +405,7 @@ if (dropdownButton && dropdownContent && arrowIcon) {
 
 window.addEventListener('load', () => {
   aplicarLabelsSimples();
+  aplicarUnidadesNosInputs();
   atualizarDefinicao('perimetroForm');
   atualizarResumoMobile();
   atualizarResumoDesktop();
@@ -683,9 +859,11 @@ function mostrarFormularioDesktop(tipo) {
 /* Cálculos Desktop */
 async function calcularPerimetroDesktop() {
   const n = parseInt(document.getElementById('ladosPerimetroDesktop').value, 10);
-  const lado = parseFloat(document.getElementById('medidaLadoDesktop').value);
-  if (isNaN(n) || n < 3 || isNaN(lado) || lado <= 0) { alert('Informe n ≥ 3 e lado maior que zero.'); return; }
-  const perimetro = n * lado;
+  const ladoData = readRequiredLengthInput('medidaLadoDesktop', 'Informe n ≥ 3 e lado maior que zero.');
+  if (isNaN(n) || n < 3 || !ladoData) { alert('Informe n ≥ 3 e lado maior que zero.'); return; }
+  const perimetroCm = n * ladoData.cm;
+  const outputUnit = getOutputUnitForForm('perimetroFormDesktop');
+  const perimetroOut = convertCmToLength(perimetroCm, outputUnit);
   const resultadoDivDesk = document.getElementById('resultado-desktop');
   const mensagem = document.getElementById('mensagemResultadoDesktop');
   const passoAPasso = document.getElementById('passoAPassoDesktop');
@@ -693,16 +871,19 @@ async function calcularPerimetroDesktop() {
     ['n', getRawField('ladosPerimetroDesktop')],
     ['lado', getRawField('medidaLadoDesktop')]
   ]);
-  mensagem.innerHTML = `<strong>Perímetro:</strong> ${formatEq(perimetro)} (mesma unidade do lado).`;
+  mensagem.innerHTML = `<strong>Perímetro:</strong> ${formatWithUnit(perimetroOut, outputUnit)}.`;
   passoAPasso.innerHTML = `
-    <p><strong>Passo 1:</strong> P = n × a.</p>
-    <p><strong>Passo 2:</strong> P = ${n} × ${lado.toFixed(2)}.</p>
-    <p><strong>Passo 3:</strong> P = ${perimetro.toFixed(4)}.</p>
-    <p><strong>Resultado:</strong> P ${formatEq(perimetro)}.</p>
+    ${conversionStepLength('a', ladoData)}
+    <p><strong>Passo 1:</strong> Dados: n = ${n} e a = ${ladoData.cm.toFixed(2)} cm.</p>
+    <p><strong>Passo 2:</strong> Fórmula: P = n × a.</p>
+    <p><strong>Passo 3:</strong> Substituição: P = ${n} × ${ladoData.cm.toFixed(2)}.</p>
+    <p><strong>Passo 4:</strong> Multiplicação: P = ${perimetroCm.toFixed(4)} cm.</p>
+    ${conversionResultStepLength('P', perimetroCm, outputUnit)}
+    <p><strong>Resultado:</strong> P ${formatWithUnit(perimetroOut, outputUnit)}.</p>
   `;
   resultadoDivDesk.style.display = 'block';
   try {
-    const resp = await enviarHistorico(21, { n, lado }, { perimetro });
+    const resp = await enviarHistorico(21, { n, lado: ladoData.raw, ladoUnidade: ladoData.unit }, { perimetroCm, perimetroOut, outputUnit });
     if (resp && resp.novas_conquistas?.length) {
       const conquistas = await window.carregarConquistasAPI?.() ?? [];
       window.mostrarNovasConquistasLocal?.(conquistas, false, resp.novas_conquistas);
@@ -711,10 +892,12 @@ async function calcularPerimetroDesktop() {
 }
 
 async function calcularAreaParalelogramoDesktop() {
-  const b = parseFloat(document.getElementById('baseParalelogramoDesktop').value);
-  const h = parseFloat(document.getElementById('alturaParalelogramoDesktop').value);
-  if (isNaN(b) || b <= 0 || isNaN(h) || h <= 0) { alert('Informe base e altura maiores que zero.'); return; }
-  const area = b * h;
+  const bData = readRequiredLengthInput('baseParalelogramoDesktop', 'Informe base e altura maiores que zero.');
+  const hData = readRequiredLengthInput('alturaParalelogramoDesktop', 'Informe base e altura maiores que zero.');
+  if (!bData || !hData) return;
+  const areaCm2 = bData.cm * hData.cm;
+  const outputUnit = getOutputUnitForForm('areaParalelogramoFormDesktop');
+  const areaOut = convertCm2ToArea(areaCm2, outputUnit);
   const resultadoDivDesk = document.getElementById('resultado-desktop');
   const mensagem = document.getElementById('mensagemResultadoDesktop');
   const passoAPasso = document.getElementById('passoAPassoDesktop');
@@ -722,16 +905,20 @@ async function calcularAreaParalelogramoDesktop() {
     ['base', getRawField('baseParalelogramoDesktop')],
     ['altura', getRawField('alturaParalelogramoDesktop')]
   ]);
-  mensagem.innerHTML = `<strong>Área do paralelogramo:</strong> ${formatEq(area)} unidades².`;
+  mensagem.innerHTML = `<strong>Área do paralelogramo:</strong> ${formatWithUnit(areaOut, outputUnit, true)}.`;
   passoAPasso.innerHTML = `
-    <p><strong>Passo 1:</strong> A = b × h.</p>
-    <p><strong>Passo 2:</strong> A = ${b.toFixed(2)} × ${h.toFixed(2)}.</p>
-    <p><strong>Passo 3:</strong> A = ${area.toFixed(4)}.</p>
-    <p><strong>Resultado:</strong> A ${formatEq(area)} unidades².</p>
+    ${conversionStepLength('b', bData)}
+    ${conversionStepLength('h', hData)}
+    <p><strong>Passo 1:</strong> Dados: b = ${bData.cm.toFixed(2)} cm e h = ${hData.cm.toFixed(2)} cm.</p>
+    <p><strong>Passo 2:</strong> Fórmula: A = b × h.</p>
+    <p><strong>Passo 3:</strong> Substituição: A = ${bData.cm.toFixed(2)} × ${hData.cm.toFixed(2)}.</p>
+    <p><strong>Passo 4:</strong> Multiplicação: A = ${areaCm2.toFixed(4)} cm².</p>
+    ${conversionResultStepArea('A', areaCm2, outputUnit)}
+    <p><strong>Resultado:</strong> A ${formatWithUnit(areaOut, outputUnit, true)}.</p>
   `;
   resultadoDivDesk.style.display = 'block';
   try {
-    const resp = await enviarHistorico(30, { b, h }, { area });
+    const resp = await enviarHistorico(30, { b: bData.raw, bUnidade: bData.unit, h: hData.raw, hUnidade: hData.unit }, { areaCm2, areaOut, outputUnit });
     if (resp && resp.novas_conquistas?.length) {
       const conquistas = await window.carregarConquistasAPI?.() ?? [];
       window.mostrarNovasConquistasLocal?.(conquistas, false, resp.novas_conquistas);
@@ -740,10 +927,12 @@ async function calcularAreaParalelogramoDesktop() {
 }
 
 async function calcularAreaLosangoDesktop() {
-  const D = parseFloat(document.getElementById('diagonalMaiorLosangoDesktop').value);
-  const d = parseFloat(document.getElementById('diagonalMenorLosangoDesktop').value);
-  if (isNaN(D) || D <= 0 || isNaN(d) || d <= 0) { alert('Informe diagonais maiores que zero.'); return; }
-  const area = (D * d) / 2;
+  const dMaiorData = readRequiredLengthInput('diagonalMaiorLosangoDesktop', 'Informe diagonais maiores que zero.');
+  const dMenorData = readRequiredLengthInput('diagonalMenorLosangoDesktop', 'Informe diagonais maiores que zero.');
+  if (!dMaiorData || !dMenorData) return;
+  const areaCm2 = (dMaiorData.cm * dMenorData.cm) / 2;
+  const outputUnit = getOutputUnitForForm('areaLosangoFormDesktop');
+  const areaOut = convertCm2ToArea(areaCm2, outputUnit);
   const resultadoDivDesk = document.getElementById('resultado-desktop');
   const mensagem = document.getElementById('mensagemResultadoDesktop');
   const passoAPasso = document.getElementById('passoAPassoDesktop');
@@ -751,17 +940,20 @@ async function calcularAreaLosangoDesktop() {
     ['D', getRawField('diagonalMaiorLosangoDesktop')],
     ['d', getRawField('diagonalMenorLosangoDesktop')]
   ]);
-  mensagem.innerHTML = `<strong>Área do losango:</strong> ${formatEq(area)} unidades².`;
+  mensagem.innerHTML = `<strong>Área do losango:</strong> ${formatWithUnit(areaOut, outputUnit, true)}.`;
   passoAPasso.innerHTML = `
-    <p><strong>Passo 1:</strong> A = <span class="frac"><span class="top">D × d</span><span class="bottom">2</span></span>.</p>
-    <p><strong>Passo 2:</strong> A = <span class="frac"><span class="top">${D.toFixed(2)} × ${d.toFixed(2)}</span><span class="bottom">2</span></span>.</p>
-    <p><strong>Passo 3:</strong> Produto das diagonais: ${(D * d).toFixed(4)}.</p>
-    <p><strong>Passo 4:</strong> A = ${area.toFixed(4)}.</p>
-    <p><strong>Resultado:</strong> A ${formatEq(area)} unidades².</p>
+    ${conversionStepLength('D', dMaiorData)}
+    ${conversionStepLength('d', dMenorData)}
+    <p><strong>Passo 1:</strong> Dados: D = ${dMaiorData.cm.toFixed(2)} cm e d = ${dMenorData.cm.toFixed(2)} cm.</p>
+    <p><strong>Passo 2:</strong> Fórmula: A = <span class="frac"><span class="top">D × d</span><span class="bottom">2</span></span>.</p>
+    <p><strong>Passo 3:</strong> Produto das diagonais: D × d = ${(dMaiorData.cm * dMenorData.cm).toFixed(4)}.</p>
+    <p><strong>Passo 4:</strong> Divisão por 2: A = ${areaCm2.toFixed(4)} cm².</p>
+    ${conversionResultStepArea('A', areaCm2, outputUnit)}
+    <p><strong>Resultado:</strong> A ${formatWithUnit(areaOut, outputUnit, true)}.</p>
   `;
   resultadoDivDesk.style.display = 'block';
   try {
-    const resp = await enviarHistorico(31, { D, d }, { area });
+    const resp = await enviarHistorico(31, { D: dMaiorData.raw, DUnidade: dMaiorData.unit, d: dMenorData.raw, dUnidade: dMenorData.unit }, { areaCm2, areaOut, outputUnit });
     if (resp && resp.novas_conquistas?.length) {
       const conquistas = await window.carregarConquistasAPI?.() ?? [];
       window.mostrarNovasConquistasLocal?.(conquistas, false, resp.novas_conquistas);
@@ -770,11 +962,13 @@ async function calcularAreaLosangoDesktop() {
 }
 
 async function calcularAreaTrapezioDesktop() {
-  const B = parseFloat(document.getElementById('baseMaiorTrapezioDesktop').value);
-  const b = parseFloat(document.getElementById('baseMenorTrapezioDesktop').value);
-  const h = parseFloat(document.getElementById('alturaTrapezioDesktop').value);
-  if (isNaN(B) || B <= 0 || isNaN(b) || b <= 0 || isNaN(h) || h <= 0) { alert('Informe bases e altura maiores que zero.'); return; }
-  const area = ((B + b) * h) / 2;
+  const bMaiorData = readRequiredLengthInput('baseMaiorTrapezioDesktop', 'Informe bases e altura maiores que zero.');
+  const bMenorData = readRequiredLengthInput('baseMenorTrapezioDesktop', 'Informe bases e altura maiores que zero.');
+  const hData = readRequiredLengthInput('alturaTrapezioDesktop', 'Informe bases e altura maiores que zero.');
+  if (!bMaiorData || !bMenorData || !hData) return;
+  const areaCm2 = ((bMaiorData.cm + bMenorData.cm) * hData.cm) / 2;
+  const outputUnit = getOutputUnitForForm('areaTrapezioFormDesktop');
+  const areaOut = convertCm2ToArea(areaCm2, outputUnit);
   const resultadoDivDesk = document.getElementById('resultado-desktop');
   const mensagem = document.getElementById('mensagemResultadoDesktop');
   const passoAPasso = document.getElementById('passoAPassoDesktop');
@@ -783,17 +977,22 @@ async function calcularAreaTrapezioDesktop() {
     ['b', getRawField('baseMenorTrapezioDesktop')],
     ['h', getRawField('alturaTrapezioDesktop')]
   ]);
-  mensagem.innerHTML = `<strong>Área do trapézio:</strong> ${formatEq(area)} unidades².`;
+  mensagem.innerHTML = `<strong>Área do trapézio:</strong> ${formatWithUnit(areaOut, outputUnit, true)}.`;
   passoAPasso.innerHTML = `
-    <p><strong>Passo 1:</strong> A = <span class="frac"><span class="top">(B + b) × h</span><span class="bottom">2</span></span>.</p>
-    <p><strong>Passo 2:</strong> B + b = ${(B + b).toFixed(4)}.</p>
-    <p><strong>Passo 3:</strong> (B + b) × h = ${((B + b) * h).toFixed(4)}.</p>
-    <p><strong>Passo 4:</strong> A = ${area.toFixed(4)}.</p>
-    <p><strong>Resultado:</strong> A ${formatEq(area)} unidades².</p>
+    ${conversionStepLength('B', bMaiorData)}
+    ${conversionStepLength('b', bMenorData)}
+    ${conversionStepLength('h', hData)}
+    <p><strong>Passo 1:</strong> Dados: B = ${bMaiorData.cm.toFixed(2)} cm, b = ${bMenorData.cm.toFixed(2)} cm e h = ${hData.cm.toFixed(2)} cm.</p>
+    <p><strong>Passo 2:</strong> Fórmula: A = <span class="frac"><span class="top">(B + b) × h</span><span class="bottom">2</span></span>.</p>
+    <p><strong>Passo 3:</strong> Soma das bases: B + b = ${(bMaiorData.cm + bMenorData.cm).toFixed(4)} cm.</p>
+    <p><strong>Passo 4:</strong> Produto pela altura: ${(bMaiorData.cm + bMenorData.cm).toFixed(4)} × ${hData.cm.toFixed(2)} = ${((bMaiorData.cm + bMenorData.cm) * hData.cm).toFixed(4)}.</p>
+    <p><strong>Passo 5:</strong> Divisão por 2: A = ${areaCm2.toFixed(4)} cm².</p>
+    ${conversionResultStepArea('A', areaCm2, outputUnit)}
+    <p><strong>Resultado:</strong> A ${formatWithUnit(areaOut, outputUnit, true)}.</p>
   `;
   resultadoDivDesk.style.display = 'block';
   try {
-    const resp = await enviarHistorico(32, { B, b, h }, { area });
+    const resp = await enviarHistorico(32, { B: bMaiorData.raw, BUnidade: bMaiorData.unit, b: bMenorData.raw, bUnidade: bMenorData.unit, h: hData.raw, hUnidade: hData.unit }, { areaCm2, areaOut, outputUnit });
     if (resp && resp.novas_conquistas?.length) {
       const conquistas = await window.carregarConquistasAPI?.() ?? [];
       window.mostrarNovasConquistasLocal?.(conquistas, false, resp.novas_conquistas);
@@ -802,25 +1001,30 @@ async function calcularAreaTrapezioDesktop() {
 }
 
 async function calcularAreaQuadradoDesktop() {
-  const lado = parseFloat(document.getElementById('ladoQuadradoDesktop').value);
-  if (isNaN(lado) || lado <= 0) { alert('Informe lado maior que zero.'); return; }
-  const area = lado * lado;
+  const ladoData = readRequiredLengthInput('ladoQuadradoDesktop', 'Informe lado maior que zero.');
+  if (!ladoData) return;
+  const areaCm2 = ladoData.cm * ladoData.cm;
+  const outputUnit = getOutputUnitForForm('areaQuadradoFormDesktop');
+  const areaOut = convertCm2ToArea(areaCm2, outputUnit);
   const resultadoDivDesk = document.getElementById('resultado-desktop');
   const mensagem = document.getElementById('mensagemResultadoDesktop');
   const passoAPasso = document.getElementById('passoAPassoDesktop');
   exibirValoresDigitados('valores-digitados-desktop', [
     ['lado', getRawField('ladoQuadradoDesktop')]
   ]);
-  mensagem.innerHTML = `<strong>Área do quadrado:</strong> ${formatEq(area)} unidades².`;
+  mensagem.innerHTML = `<strong>Área do quadrado:</strong> ${formatWithUnit(areaOut, outputUnit, true)}.`;
   passoAPasso.innerHTML = `
-    <p><strong>Passo 1:</strong> A = lado².</p>
-    <p><strong>Passo 2:</strong> A = ${lado.toFixed(2)}².</p>
-    <p><strong>Passo 3:</strong> A = ${area.toFixed(4)}.</p>
-    <p><strong>Resultado:</strong> A ${formatEq(area)} unidades².</p>
+    ${conversionStepLength('lado', ladoData)}
+    <p><strong>Passo 1:</strong> Dado: lado = ${ladoData.cm.toFixed(2)} cm.</p>
+    <p><strong>Passo 2:</strong> Fórmula: A = lado².</p>
+    <p><strong>Passo 3:</strong> Substituição: A = ${ladoData.cm.toFixed(2)} × ${ladoData.cm.toFixed(2)}.</p>
+    <p><strong>Passo 4:</strong> Potenciação: A = ${areaCm2.toFixed(4)} cm².</p>
+    ${conversionResultStepArea('A', areaCm2, outputUnit)}
+    <p><strong>Resultado:</strong> A ${formatWithUnit(areaOut, outputUnit, true)}.</p>
   `;
   resultadoDivDesk.style.display = 'block';
   try {
-    const resp = await enviarHistorico(27, { lado }, { area });
+    const resp = await enviarHistorico(27, { lado: ladoData.raw, ladoUnidade: ladoData.unit }, { areaCm2, areaOut, outputUnit });
     if (resp && resp.novas_conquistas?.length) {
       const conquistas = await window.carregarConquistasAPI?.() ?? [];
       window.mostrarNovasConquistasLocal?.(conquistas, false, resp.novas_conquistas);
@@ -829,10 +1033,12 @@ async function calcularAreaQuadradoDesktop() {
 }
 
 async function calcularAreaRetanguloDesktop() {
-  const base = parseFloat(document.getElementById('baseRetanguloDesktop').value);
-  const altura = parseFloat(document.getElementById('alturaRetanguloDesktop').value);
-  if (isNaN(base) || base <= 0 || isNaN(altura) || altura <= 0) { alert('Informe base e altura maiores que zero.'); return; }
-  const area = base * altura;
+  const baseData = readRequiredLengthInput('baseRetanguloDesktop', 'Informe base e altura maiores que zero.');
+  const alturaData = readRequiredLengthInput('alturaRetanguloDesktop', 'Informe base e altura maiores que zero.');
+  if (!baseData || !alturaData) return;
+  const areaCm2 = baseData.cm * alturaData.cm;
+  const outputUnit = getOutputUnitForForm('areaRetanguloFormDesktop');
+  const areaOut = convertCm2ToArea(areaCm2, outputUnit);
   const resultadoDivDesk = document.getElementById('resultado-desktop');
   const mensagem = document.getElementById('mensagemResultadoDesktop');
   const passoAPasso = document.getElementById('passoAPassoDesktop');
@@ -840,16 +1046,20 @@ async function calcularAreaRetanguloDesktop() {
     ['base', getRawField('baseRetanguloDesktop')],
     ['altura', getRawField('alturaRetanguloDesktop')]
   ]);
-  mensagem.innerHTML = `<strong>Área:</strong> ${formatEq(area)} unidades².`;
+  mensagem.innerHTML = `<strong>Área:</strong> ${formatWithUnit(areaOut, outputUnit, true)}.`;
   passoAPasso.innerHTML = `
-    <p><strong>Passo 1:</strong> A = b × h.</p>
-    <p><strong>Passo 2:</strong> A = ${base.toFixed(2)} × ${altura.toFixed(2)}.</p>
-    <p><strong>Passo 3:</strong> A = ${area.toFixed(4)}.</p>
-    <p><strong>Resultado:</strong> A ${formatEq(area)} unidades².</p>
+    ${conversionStepLength('b', baseData)}
+    ${conversionStepLength('h', alturaData)}
+    <p><strong>Passo 1:</strong> Dados: b = ${baseData.cm.toFixed(2)} cm e h = ${alturaData.cm.toFixed(2)} cm.</p>
+    <p><strong>Passo 2:</strong> Fórmula: A = b × h.</p>
+    <p><strong>Passo 3:</strong> Substituição: A = ${baseData.cm.toFixed(2)} × ${alturaData.cm.toFixed(2)}.</p>
+    <p><strong>Passo 4:</strong> Multiplicação: A = ${areaCm2.toFixed(4)} cm².</p>
+    ${conversionResultStepArea('A', areaCm2, outputUnit)}
+    <p><strong>Resultado:</strong> A ${formatWithUnit(areaOut, outputUnit, true)}.</p>
   `;
   resultadoDivDesk.style.display = 'block';
   try {
-    const resp = await enviarHistorico(22, { base, altura }, { area });
+    const resp = await enviarHistorico(22, { base: baseData.raw, baseUnidade: baseData.unit, altura: alturaData.raw, alturaUnidade: alturaData.unit }, { areaCm2, areaOut, outputUnit });
     if (resp && resp.novas_conquistas?.length) {
       const conquistas = await window.carregarConquistasAPI?.() ?? [];
       window.mostrarNovasConquistasLocal?.(conquistas, false, resp.novas_conquistas);
@@ -858,10 +1068,12 @@ async function calcularAreaRetanguloDesktop() {
 }
 
 async function calcularPerimetroRetanguloDesktop() {
-  const base = parseFloat(document.getElementById('basePerimetroRetanguloDesktop').value);
-  const altura = parseFloat(document.getElementById('alturaPerimetroRetanguloDesktop').value);
-  if (isNaN(base) || base <= 0 || isNaN(altura) || altura <= 0) { alert('Informe base e altura maiores que zero.'); return; }
-  const perimetro = 2 * (base + altura);
+  const baseData = readRequiredLengthInput('basePerimetroRetanguloDesktop', 'Informe base e altura maiores que zero.');
+  const alturaData = readRequiredLengthInput('alturaPerimetroRetanguloDesktop', 'Informe base e altura maiores que zero.');
+  if (!baseData || !alturaData) return;
+  const perimetroCm = 2 * (baseData.cm + alturaData.cm);
+  const outputUnit = getOutputUnitForForm('perimetroRetanguloFormDesktop');
+  const perimetroOut = convertCmToLength(perimetroCm, outputUnit);
   const resultadoDivDesk = document.getElementById('resultado-desktop');
   const mensagem = document.getElementById('mensagemResultadoDesktop');
   const passoAPasso = document.getElementById('passoAPassoDesktop');
@@ -869,17 +1081,20 @@ async function calcularPerimetroRetanguloDesktop() {
     ['base', getRawField('basePerimetroRetanguloDesktop')],
     ['altura', getRawField('alturaPerimetroRetanguloDesktop')]
   ]);
-  mensagem.innerHTML = `<strong>Perímetro do retângulo:</strong> ${formatEq(perimetro)} (mesma unidade dos lados).`;
+  mensagem.innerHTML = `<strong>Perímetro do retângulo:</strong> ${formatWithUnit(perimetroOut, outputUnit)}.`;
   passoAPasso.innerHTML = `
-    <p><strong>Passo 1:</strong> P = 2 × (b + h).</p>
-    <p><strong>Passo 2:</strong> P = 2 × (${base.toFixed(2)} + ${altura.toFixed(2)}).</p>
-    <p><strong>Passo 3:</strong> b + h = ${(base + altura).toFixed(4)}.</p>
-    <p><strong>Passo 4:</strong> P = ${perimetro.toFixed(4)}.</p>
-    <p><strong>Resultado:</strong> P ${formatEq(perimetro)}.</p>
+    ${conversionStepLength('b', baseData)}
+    ${conversionStepLength('h', alturaData)}
+    <p><strong>Passo 1:</strong> Dados: b = ${baseData.cm.toFixed(2)} cm e h = ${alturaData.cm.toFixed(2)} cm.</p>
+    <p><strong>Passo 2:</strong> Fórmula: P = 2 × (b + h).</p>
+    <p><strong>Passo 3:</strong> Soma interna: b + h = ${(baseData.cm + alturaData.cm).toFixed(4)} cm.</p>
+    <p><strong>Passo 4:</strong> Multiplicação por 2: P = ${perimetroCm.toFixed(4)} cm.</p>
+    ${conversionResultStepLength('P', perimetroCm, outputUnit)}
+    <p><strong>Resultado:</strong> P ${formatWithUnit(perimetroOut, outputUnit)}.</p>
   `;
   resultadoDivDesk.style.display = 'block';
   try {
-    const resp = await enviarHistorico(28, { base, altura }, { perimetro });
+    const resp = await enviarHistorico(28, { base: baseData.raw, baseUnidade: baseData.unit, altura: alturaData.raw, alturaUnidade: alturaData.unit }, { perimetroCm, perimetroOut, outputUnit });
     if (resp && resp.novas_conquistas?.length) {
       const conquistas = await window.carregarConquistasAPI?.() ?? [];
       window.mostrarNovasConquistasLocal?.(conquistas, false, resp.novas_conquistas);
@@ -888,27 +1103,32 @@ async function calcularPerimetroRetanguloDesktop() {
 }
 
 async function calcularAreaCirculoDesktop() {
-  const r = parseFloat(document.getElementById('raioCirculoDesktop').value);
-  if (isNaN(r) || r <= 0) { alert('Informe raio maior que zero.'); return; }
+  const raioData = readRequiredLengthInput('raioCirculoDesktop', 'Informe raio maior que zero.');
+  if (!raioData) return;
   const pi = Math.PI;
-  const area = pi * r * r;
+  const areaCm2 = pi * raioData.cm * raioData.cm;
+  const outputUnit = getOutputUnitForForm('areaCirculoFormDesktop');
+  const areaOut = convertCm2ToArea(areaCm2, outputUnit);
   const resultadoDivDesk = document.getElementById('resultado-desktop');
   const mensagem = document.getElementById('mensagemResultadoDesktop');
   const passoAPasso = document.getElementById('passoAPassoDesktop');
   exibirValoresDigitados('valores-digitados-desktop', [
     ['raio', getRawField('raioCirculoDesktop')]
   ]);
-  mensagem.innerHTML = `<strong>Área do círculo:</strong> ${formatEq(area)} unidades².`;
+  mensagem.innerHTML = `<strong>Área do círculo:</strong> ${formatWithUnit(areaOut, outputUnit, true)}.`;
   passoAPasso.innerHTML = `
-    <p><strong>Passo 1:</strong> A = π × r².</p>
-    <p><strong>Passo 2:</strong> A = π × ${r.toFixed(2)}².</p>
-    <p><strong>Passo 3:</strong> r² = ${(r*r).toFixed(4)}.</p>
-    <p><strong>Passo 4:</strong> A ≈ ${area.toFixed(4)}.</p>
-    <p><strong>Resultado:</strong> A ${formatEq(area)} unidades².</p>
+    ${conversionStepLength('r', raioData)}
+    <p><strong>Passo 1:</strong> Dado: r = ${raioData.cm.toFixed(2)} cm.</p>
+    <p><strong>Passo 2:</strong> Fórmula: A = π × r².</p>
+    <p><strong>Passo 3:</strong> Potência do raio: r² = ${(raioData.cm * raioData.cm).toFixed(4)}.</p>
+    <p><strong>Passo 4:</strong> Substituição com π: A = π × ${(raioData.cm * raioData.cm).toFixed(4)}.</p>
+    <p><strong>Passo 5:</strong> Resultado em cm²: A = ${areaCm2.toFixed(4)} cm².</p>
+    ${conversionResultStepArea('A', areaCm2, outputUnit)}
+    <p><strong>Resultado:</strong> A ${formatWithUnit(areaOut, outputUnit, true)}.</p>
   `;
   resultadoDivDesk.style.display = 'block';
   try {
-    const resp = await enviarHistorico(25, { r }, { area });
+    const resp = await enviarHistorico(25, { r: raioData.raw, rUnidade: raioData.unit }, { areaCm2, areaOut, outputUnit });
     if (resp && resp.novas_conquistas?.length) {
       const conquistas = await window.carregarConquistasAPI?.() ?? [];
       window.mostrarNovasConquistasLocal?.(conquistas, false, resp.novas_conquistas);
@@ -917,25 +1137,30 @@ async function calcularAreaCirculoDesktop() {
 }
 
 async function calcularPerimetroCirculoDesktop() {
-  const r = parseFloat(document.getElementById('raioPerimetroCirculoDesktop').value);
-  if (isNaN(r) || r <= 0) { alert('Informe raio maior que zero.'); return; }
-  const perimetro = 2 * Math.PI * r;
+  const raioData = readRequiredLengthInput('raioPerimetroCirculoDesktop', 'Informe raio maior que zero.');
+  if (!raioData) return;
+  const perimetroCm = 2 * Math.PI * raioData.cm;
+  const outputUnit = getOutputUnitForForm('perimetroCirculoFormDesktop');
+  const perimetroOut = convertCmToLength(perimetroCm, outputUnit);
   const resultadoDivDesk = document.getElementById('resultado-desktop');
   const mensagem = document.getElementById('mensagemResultadoDesktop');
   const passoAPasso = document.getElementById('passoAPassoDesktop');
   exibirValoresDigitados('valores-digitados-desktop', [
     ['raio', getRawField('raioPerimetroCirculoDesktop')]
   ]);
-  mensagem.innerHTML = `<strong>Perímetro do círculo:</strong> ${formatEq(perimetro)} (mesma unidade do raio).`;
+  mensagem.innerHTML = `<strong>Perímetro do círculo:</strong> ${formatWithUnit(perimetroOut, outputUnit)}.`;
   passoAPasso.innerHTML = `
-    <p><strong>Passo 1:</strong> P = 2 × π × r.</p>
-    <p><strong>Passo 2:</strong> P = 2 × π × ${r.toFixed(2)}.</p>
-    <p><strong>Passo 3:</strong> P ≈ ${perimetro.toFixed(4)}.</p>
-    <p><strong>Resultado:</strong> P ${formatEq(perimetro)}.</p>
+    ${conversionStepLength('r', raioData)}
+    <p><strong>Passo 1:</strong> Dado: r = ${raioData.cm.toFixed(2)} cm.</p>
+    <p><strong>Passo 2:</strong> Fórmula: P = 2 × π × r.</p>
+    <p><strong>Passo 3:</strong> Substituição: P = 2 × π × ${raioData.cm.toFixed(2)}.</p>
+    <p><strong>Passo 4:</strong> Resultado em cm: P = ${perimetroCm.toFixed(4)} cm.</p>
+    ${conversionResultStepLength('P', perimetroCm, outputUnit)}
+    <p><strong>Resultado:</strong> P ${formatWithUnit(perimetroOut, outputUnit)}.</p>
   `;
   resultadoDivDesk.style.display = 'block';
   try {
-    const resp = await enviarHistorico(29, { r }, { perimetro });
+    const resp = await enviarHistorico(29, { r: raioData.raw, rUnidade: raioData.unit }, { perimetroCm, perimetroOut, outputUnit });
     if (resp && resp.novas_conquistas?.length) {
       const conquistas = await window.carregarConquistasAPI?.() ?? [];
       window.mostrarNovasConquistasLocal?.(conquistas, false, resp.novas_conquistas);
@@ -944,10 +1169,12 @@ async function calcularPerimetroCirculoDesktop() {
 }
 
 async function calcularAreaTrianguloDesktop() {
-  const b = parseFloat(document.getElementById('baseTrianguloDesktop').value);
-  const h = parseFloat(document.getElementById('alturaTrianguloDesktop').value);
-  if (isNaN(b) || b <= 0 || isNaN(h) || h <= 0) { alert('Informe base e altura maiores que zero.'); return; }
-  const area = (b * h) / 2;
+  const baseData = readRequiredLengthInput('baseTrianguloDesktop', 'Informe base e altura maiores que zero.');
+  const alturaData = readRequiredLengthInput('alturaTrianguloDesktop', 'Informe base e altura maiores que zero.');
+  if (!baseData || !alturaData) return;
+  const areaCm2 = (baseData.cm * alturaData.cm) / 2;
+  const outputUnit = getOutputUnitForForm('areaTrianguloFormDesktop');
+  const areaOut = convertCm2ToArea(areaCm2, outputUnit);
   const resultadoDivDesk = document.getElementById('resultado-desktop');
   const mensagem = document.getElementById('mensagemResultadoDesktop');
   const passoAPasso = document.getElementById('passoAPassoDesktop');
@@ -955,17 +1182,20 @@ async function calcularAreaTrianguloDesktop() {
     ['base', getRawField('baseTrianguloDesktop')],
     ['altura', getRawField('alturaTrianguloDesktop')]
   ]);
-  mensagem.innerHTML = `<strong>Área do triângulo:</strong> ${formatEq(area)} unidades².`;
+  mensagem.innerHTML = `<strong>Área do triângulo:</strong> ${formatWithUnit(areaOut, outputUnit, true)}.`;
   passoAPasso.innerHTML = `
-    <p><strong>Passo 1:</strong> A = <span class="frac"><span class="top">b × h</span><span class="bottom">2</span></span>.</p>
-    <p><strong>Passo 2:</strong> A = <span class="frac"><span class="top">${b.toFixed(2)} × ${h.toFixed(2)}</span><span class="bottom">2</span></span>.</p>
-    <p><strong>Passo 3:</strong> b × h = ${(b*h).toFixed(4)}.</p>
-    <p><strong>Passo 4:</strong> A = ${area.toFixed(4)}.</p>
-    <p><strong>Resultado:</strong> A ${formatEq(area)} unidades².</p>
+    ${conversionStepLength('b', baseData)}
+    ${conversionStepLength('h', alturaData)}
+    <p><strong>Passo 1:</strong> Dados: b = ${baseData.cm.toFixed(2)} cm e h = ${alturaData.cm.toFixed(2)} cm.</p>
+    <p><strong>Passo 2:</strong> Fórmula: A = <span class="frac"><span class="top">b × h</span><span class="bottom">2</span></span>.</p>
+    <p><strong>Passo 3:</strong> Produto da base pela altura: b × h = ${(baseData.cm * alturaData.cm).toFixed(4)}.</p>
+    <p><strong>Passo 4:</strong> Divisão por 2: A = ${areaCm2.toFixed(4)} cm².</p>
+    ${conversionResultStepArea('A', areaCm2, outputUnit)}
+    <p><strong>Resultado:</strong> A ${formatWithUnit(areaOut, outputUnit, true)}.</p>
   `;
   resultadoDivDesk.style.display = 'block';
   try {
-    const resp = await enviarHistorico(26, { b, h }, { area });
+    const resp = await enviarHistorico(26, { b: baseData.raw, bUnidade: baseData.unit, h: alturaData.raw, hUnidade: alturaData.unit }, { areaCm2, areaOut, outputUnit });
     if (resp && resp.novas_conquistas?.length) {
       const conquistas = await window.carregarConquistasAPI?.() ?? [];
       window.mostrarNovasConquistasLocal?.(conquistas, false, resp.novas_conquistas);
@@ -974,13 +1204,15 @@ async function calcularAreaTrianguloDesktop() {
 }
 
 async function calcularSemelhancaDesktop() {
-  const ladoRef = parseFloat(document.getElementById('ladoMenorDesktop').value);
-  const ladoComp = parseFloat(document.getElementById('ladoMaiorDesktop').value);
-  const areaRef = parseFloat(document.getElementById('areaReferencialDesktop').value);
-  if (isNaN(ladoRef) || ladoRef <= 0 || isNaN(ladoComp) || ladoComp <= 0) { alert('Informe lados correspondentes maiores que zero.'); return; }
-  const k = ladoComp / ladoRef;
+  const ladoRefData = readRequiredLengthInput('ladoMenorDesktop', 'Informe lados correspondentes maiores que zero.');
+  const ladoCompData = readRequiredLengthInput('ladoMaiorDesktop', 'Informe lados correspondentes maiores que zero.');
+  if (!ladoRefData || !ladoCompData) return;
+  const areaRefData = readOptionalAreaInput('areaReferencialDesktop');
+  const k = ladoCompData.cm / ladoRefData.cm;
   const razaoArea = k * k;
-  const areaProj = !isNaN(areaRef) && areaRef > 0 ? areaRef * razaoArea : null;
+  const areaProjCm2 = areaRefData.provided ? areaRefData.cm2 * razaoArea : null;
+  const outputUnit = getOutputUnitForForm('semelhancaFormDesktop');
+  const areaProjOut = areaProjCm2 !== null ? convertCm2ToArea(areaProjCm2, outputUnit) : null;
   const resultadoDivDesk = document.getElementById('resultado-desktop');
   const mensagem = document.getElementById('mensagemResultadoDesktop');
   const passoAPasso = document.getElementById('passoAPassoDesktop');
@@ -991,13 +1223,28 @@ async function calcularSemelhancaDesktop() {
   ]);
   mensagem.innerHTML = `<strong>Razão linear (k):</strong> ${k.toFixed(4)} | <strong>Razão de áreas (k²):</strong> ${razaoArea.toFixed(4)}`;
   passoAPasso.innerHTML = `
-    <p><strong>Passo 1:</strong> k = ${ladoComp.toFixed(2)} ÷ ${ladoRef.toFixed(2)} = ${k.toFixed(4)}.</p>
-    <p><strong>Passo 2:</strong> k² = ${k.toFixed(4)}² = ${razaoArea.toFixed(4)}.</p>
-    ${areaProj ? `<p><strong>Passo 3:</strong> Área semelhante = ${areaRef.toFixed(2)} × ${razaoArea.toFixed(4)} = ${areaProj.toFixed(4)}.</p>` : '<p><strong>Passo 3:</strong> Multiplique qualquer área conhecida por k² para obter a correspondente.</p>'}
+    ${conversionStepLength('lado referência', ladoRefData)}
+    ${conversionStepLength('lado correspondente', ladoCompData)}
+    ${conversionStepArea('área referência', areaRefData)}
+    <p><strong>Passo 1:</strong> Dados: lado de referência = ${ladoRefData.cm.toFixed(2)} cm e lado correspondente = ${ladoCompData.cm.toFixed(2)} cm.</p>
+    <p><strong>Passo 2:</strong> Razão linear: k = lado correspondente ÷ lado referência = ${ladoCompData.cm.toFixed(2)} ÷ ${ladoRefData.cm.toFixed(2)} = ${k.toFixed(4)}.</p>
+    <p><strong>Passo 3:</strong> Razão de áreas: k² = ${k.toFixed(4)}² = ${razaoArea.toFixed(4)}.</p>
+    ${areaProjOut !== null ? `<p><strong>Passo 4:</strong> Área semelhante (em cm²) = ${areaRefData.cm2.toFixed(2)} × ${razaoArea.toFixed(4)} = ${areaProjCm2.toFixed(4)} cm².</p>${conversionResultStepArea('A semelhante', areaProjCm2, outputUnit)}<p><strong>Resultado:</strong> Área semelhante = ${formatWithUnit(areaProjOut, outputUnit, true)}.</p>` : '<p><strong>Passo 4:</strong> Multiplique qualquer área conhecida por k² para obter a área correspondente.</p>'}
   `;
   resultadoDivDesk.style.display = 'block';
   try {
-    const resp = await enviarHistorico(23, { ladoRef, ladoComp, areaRef }, { k, razaoArea, areaProj });
+    const resp = await enviarHistorico(
+      23,
+      {
+        ladoRef: ladoRefData.raw,
+        ladoRefUnidade: ladoRefData.unit,
+        ladoComp: ladoCompData.raw,
+        ladoCompUnidade: ladoCompData.unit,
+        areaRef: areaRefData.provided ? areaRefData.raw : null,
+        areaRefUnidade: areaRefData.unit
+      },
+      { k, razaoArea, areaProjCm2, areaProjOut, outputUnit }
+    );
     if (resp && resp.novas_conquistas?.length) {
       const conquistas = await window.carregarConquistasAPI?.() ?? [];
       window.mostrarNovasConquistasLocal?.(conquistas, false, resp.novas_conquistas);
@@ -1006,15 +1253,17 @@ async function calcularSemelhancaDesktop() {
 }
 
 async function calcularPitagorasDesktop() {
-  const bRaw = getRawField('catetoADesktop'); // cateto b
-  const cRaw = getRawField('catetoBDesktop'); // cateto c
-  const aRaw = getRawField('hipotenusaDesktop'); // hipotenusa a
-  const b = parseFloat(bRaw);
-  const c = parseFloat(cRaw);
-  const a = parseFloat(aRaw);
+  const bData = readOptionalLengthInput('catetoADesktop'); // cateto b
+  const cData = readOptionalLengthInput('catetoBDesktop'); // cateto c
+  const aData = readOptionalLengthInput('hipotenusaDesktop'); // hipotenusa a
+  const b = bData.cm;
+  const c = cData.cm;
+  const a = aData.cm;
 
   const conhecidos = [a, b, c].filter(v => Number.isFinite(v) && v > 0).length;
   if (conhecidos < 2) { alert('Informe pelo menos dois valores positivos (dois catetos ou a hipotenusa).'); return; }
+
+  const outputUnit = getOutputUnitForForm('pitagorasFormDesktop');
 
   const resultadoDivDesk = document.getElementById('resultado-desktop');
   const mensagem = document.getElementById('mensagemResultadoDesktop');
@@ -1029,11 +1278,13 @@ async function calcularPitagorasDesktop() {
     calculado = hip;
     achou = 'hipotenusa a';
     passos = `
-      <p><strong>Passo 1:</strong> a² = b² + c².</p>
-      <p><strong>Passo 2:</strong> a² = ${b.toFixed(2)}² + ${c.toFixed(2)}² = ${a2.toFixed(4)}.</p>
-      <p><strong>Passo 3:</strong> a = √${a2.toFixed(4)} ${formatEq(hip)}</p>
+      <p><strong>Passo 1:</strong> Dados: b = ${b.toFixed(2)} cm e c = ${c.toFixed(2)} cm.</p>
+      <p><strong>Passo 2:</strong> Fórmula: a² = b² + c².</p>
+      <p><strong>Passo 3:</strong> Substituição: a² = ${b.toFixed(2)}² + ${c.toFixed(2)}² = ${a2.toFixed(4)}.</p>
+      <p><strong>Passo 4:</strong> Raiz quadrada: a = √${a2.toFixed(4)} ${formatEq(hip)}.</p>
+      ${conversionResultStepLength('a', hip, outputUnit)}
     `;
-    mensagem.innerHTML = `<strong>Hipotenusa (a):</strong> ${formatEq(hip)}.`;
+    mensagem.innerHTML = `<strong>Hipotenusa (a):</strong> ${formatWithUnit(convertCmToLength(hip, outputUnit), outputUnit)}.`;
   } else if (!Number.isFinite(b) && Number.isFinite(c) && Number.isFinite(a)) {
     if (a <= c) { alert('Para calcular cateto b: hipotenusa (a) deve ser maior que o outro cateto.'); return; }
     const b2 = a * a - c * c;
@@ -1041,11 +1292,13 @@ async function calcularPitagorasDesktop() {
     calculado = cat;
     achou = 'cateto b';
     passos = `
-      <p><strong>Passo 1:</strong> b² = a² − c².</p>
-      <p><strong>Passo 2:</strong> b² = ${a.toFixed(2)}² − ${c.toFixed(2)}² = ${b2.toFixed(4)}.</p>
-      <p><strong>Passo 3:</strong> b = √${b2.toFixed(4)} ${formatEq(cat)}</p>
+      <p><strong>Passo 1:</strong> Dados: a = ${a.toFixed(2)} cm e c = ${c.toFixed(2)} cm.</p>
+      <p><strong>Passo 2:</strong> Fórmula: b² = a² − c².</p>
+      <p><strong>Passo 3:</strong> Substituição: b² = ${a.toFixed(2)}² − ${c.toFixed(2)}² = ${b2.toFixed(4)}.</p>
+      <p><strong>Passo 4:</strong> Raiz quadrada: b = √${b2.toFixed(4)} ${formatEq(cat)}.</p>
+      ${conversionResultStepLength('b', cat, outputUnit)}
     `;
-    mensagem.innerHTML = `<strong>Cateto b:</strong> ${formatEq(cat)}.`;
+    mensagem.innerHTML = `<strong>Cateto b:</strong> ${formatWithUnit(convertCmToLength(cat, outputUnit), outputUnit)}.`;
   } else if (!Number.isFinite(c) && Number.isFinite(b) && Number.isFinite(a)) {
     if (a <= b) { alert('Para calcular cateto c: hipotenusa (a) deve ser maior que o outro cateto.'); return; }
     const c2 = a * a - b * b;
@@ -1053,20 +1306,22 @@ async function calcularPitagorasDesktop() {
     calculado = cat;
     achou = 'cateto c';
     passos = `
-      <p><strong>Passo 1:</strong> c² = a² − b².</p>
-      <p><strong>Passo 2:</strong> c² = ${a.toFixed(2)}² − ${b.toFixed(2)}² = ${c2.toFixed(4)}.</p>
-      <p><strong>Passo 3:</strong> c = √${c2.toFixed(4)} ${formatEq(cat)}</p>
+      <p><strong>Passo 1:</strong> Dados: a = ${a.toFixed(2)} cm e b = ${b.toFixed(2)} cm.</p>
+      <p><strong>Passo 2:</strong> Fórmula: c² = a² − b².</p>
+      <p><strong>Passo 3:</strong> Substituição: c² = ${a.toFixed(2)}² − ${b.toFixed(2)}² = ${c2.toFixed(4)}.</p>
+      <p><strong>Passo 4:</strong> Raiz quadrada: c = √${c2.toFixed(4)} ${formatEq(cat)}.</p>
+      ${conversionResultStepLength('c', cat, outputUnit)}
     `;
-    mensagem.innerHTML = `<strong>Cateto c:</strong> ${formatEq(cat)}.`;
+    mensagem.innerHTML = `<strong>Cateto c:</strong> ${formatWithUnit(convertCmToLength(cat, outputUnit), outputUnit)}.`;
   } else {
     alert('Preencha somente dois valores para calcular o terceiro (valores positivos).');
     return;
   }
 
   exibirValoresDigitados('valores-digitados-desktop', [
-    ['b', bRaw],
-    ['c', cRaw],
-    ['a', aRaw]
+    ['b', getRawField('catetoADesktop')],
+    ['c', getRawField('catetoBDesktop')],
+    ['a', getRawField('hipotenusaDesktop')]
   ]);
   passoAPasso.innerHTML = passos;
   resultadoDivDesk.style.display = 'block';

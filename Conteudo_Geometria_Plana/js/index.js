@@ -205,7 +205,10 @@ classificando as funções envolvidas.`
           section.style.marginTop = `${contentStartLine}px`;
 
           if (sidebar && window.matchMedia('(min-width: 481px)').matches) {
-            const baseTop = contentStartLine;
+            const headerIsHidden =
+              navbar.classList.contains('is-hidden') || breadcrumb.classList.contains('is-hidden');
+            const sidebarLiftWhenHeaderHidden = headerIsHidden ? Math.min(56, Math.floor(navHeight * 0.65)) : 0;
+            const baseTop = contentStartLine - sidebarLiftWhenHeaderHidden;
             let computedTop = baseTop;
             const viewportGap = 20;
             const footerGap = 20;

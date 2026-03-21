@@ -1,0 +1,76 @@
+name: CI + Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Testes simples
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validar estrutura basica
+        run: |
+          set -e
+
+          test -f "Conteudo_Geometria_Plana/index.html"
+          test -f "Formula_Geometria_Plana/geometria-plana.html"
+          test -f "robots.txt"
+          test -f "sitemap.xml"
+
+      - name: Validar conteudo minimo de HTML
+        run: |
+          set -e
+
+          grep -q "<title>" "Conteudo_Geometria_Plana/index.html"
+          grep -q "<title>" "Formula_Geometria_Plana/geometria-plana.html"
+          grep -qi "viewport" "Conteudo_Geometria_Plana/index.html"
+          grep -qi "viewport" "Formula_Geometria_Plana/geometria-plana.html"
+
+      - name: Validar sitemap e robots
+        run: |
+          set -e
+
+          grep -q "<urlset" "sitemap.xml"
+          grep -q "<loc>" "sitemap.xml"
+          grep -q "Sitemap:" "robots.txt"
+
+  deploy:
+    name: Deploy para GitHub Pages
+    runs-on: ubuntu-latest
+    needs: test
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

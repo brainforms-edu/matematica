@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://brainforms-edu.github.io/conteudo-matematica-geometria-plana/sitemap.xml

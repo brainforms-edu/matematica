@@ -928,6 +928,15 @@
         gap: 10px;
       }
 
+      .author-text {
+        text-align: left;
+        flex: 1 1 auto;
+      }
+
+      .author-text p {
+        text-align: left;
+      }
+
       .author-brand {
         padding-left: 8px;
         border-left-width: 2px;
