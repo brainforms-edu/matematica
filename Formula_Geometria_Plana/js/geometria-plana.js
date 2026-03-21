@@ -12,19 +12,25 @@ const formatEq = (value, decimals = 2) => {
 
 const getRawField = (id) => document.getElementById(id)?.value?.trim() ?? '';
 
-function addStaticLabels(selector) {
-  document.querySelectorAll(selector).forEach(input => {
-    const labelText = input.getAttribute('placeholder') || input.getAttribute('aria-label');
+function aplicarLabelsSimples() {
+  const inputs = document.querySelectorAll('.calculo-form-desktop input');
+
+  inputs.forEach((input, index) => {
+    const labelText = (input.getAttribute('placeholder') || '').trim();
     if (!labelText) return;
-    const existing = input.previousElementSibling;
-    if (existing && existing.classList?.contains('input-label')) {
-      existing.textContent = labelText;
-      return;
+
+    if (!input.id) {
+      input.id = `campo-formula-${index + 1}`;
     }
+
+    const existingLabel = input.parentElement.querySelector(`label[for="${input.id}"]`);
+    if (existingLabel) return;
+
     const label = document.createElement('label');
     label.className = 'input-label';
+    label.setAttribute('for', input.id);
     label.textContent = labelText;
-    if (input.id) label.setAttribute('for', input.id);
+
     input.parentNode.insertBefore(label, input);
   });
 }
@@ -186,35 +192,44 @@ const definicoes = {
 };
 
 function atualizarDefinicao(formId) {
-  explicacaoDiv.innerHTML = definicoes[formId] || '';
+  const alvo = explicacaoDiv || document.getElementById('explicacaoTextoDesktop');
+  if (!alvo) return;
+  alvo.innerHTML = definicoes[formId] || '';
 }
 
-dropdownButton.addEventListener('click', () => {
-  const expanded = dropdownButton.getAttribute('aria-expanded') === 'true';
-  dropdownContent.classList.toggle('show', !expanded);
-  dropdownButton.setAttribute('aria-expanded', !expanded);
-  arrowIcon.classList.toggle('open', !expanded);
-});
+const dropdownButton = document.getElementById('dropdownButton');
+const dropdownContent = document.getElementById('dropdownContent');
+const arrowIcon = document.getElementById('arrowIcon');
 
-dropdownContent.querySelectorAll('button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const formId = btn.getAttribute('data-form');
-    forms.forEach(f => f.classList.remove('active'));
-    document.getElementById(formId).classList.add('active');
-    resultadoDiv.style.display = 'none';
-    saidaResultado.textContent = '';
-    exibirValoresDigitados('valores-digitados-mobile', []);
-    atualizarResumoMobile();
-    dropdownContent.classList.remove('show');
-    dropdownButton.setAttribute('aria-expanded', false);
-    arrowIcon.classList.remove('open');
-    dropdownButton.textContent = btn.textContent;
-    dropdownButton.appendChild(arrowIcon);
-    atualizarDefinicao(formId);
+if (dropdownButton && dropdownContent && arrowIcon) {
+  dropdownButton.addEventListener('click', () => {
+    const expanded = dropdownButton.getAttribute('aria-expanded') === 'true';
+    dropdownContent.classList.toggle('show', !expanded);
+    dropdownButton.setAttribute('aria-expanded', !expanded);
+    arrowIcon.classList.toggle('open', !expanded);
   });
-});
+
+  dropdownContent.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const formId = btn.getAttribute('data-form');
+      forms.forEach(f => f.classList.remove('active'));
+      document.getElementById(formId).classList.add('active');
+      resultadoDiv.style.display = 'none';
+      saidaResultado.textContent = '';
+      exibirValoresDigitados('valores-digitados-mobile', []);
+      atualizarResumoMobile();
+      dropdownContent.classList.remove('show');
+      dropdownButton.setAttribute('aria-expanded', false);
+      arrowIcon.classList.remove('open');
+      dropdownButton.textContent = btn.textContent;
+      dropdownButton.appendChild(arrowIcon);
+      atualizarDefinicao(formId);
+    });
+  });
+}
 
 window.addEventListener('load', () => {
+  aplicarLabelsSimples();
   atualizarDefinicao('perimetroForm');
   atualizarResumoMobile();
   atualizarResumoDesktop();
