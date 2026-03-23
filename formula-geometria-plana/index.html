@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Fórmulas de Geometria Plana | BrainForms</title>
+<meta name="description" content="Fórmulas de Geometria Plana no BrainForms: área, perímetro, semelhança e Teorema de Pitágoras com explicação simples e cálculo passo a passo.">
+<meta name="keywords" content="matemática, geometria-plana, fórmulas, cálculo, educação">
+<meta name="author" content="Luiz Felipe Freitas Santos">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+
+<link rel="canonical" href="https://brainforms-edu.github.io/conteudo-matematica-geometria-plana/formula-geometria-plana/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="BrainForms">
+<meta property="og:title" content="Fórmulas de Geometria Plana | BrainForms">
+<meta property="og:description" content="Área, perímetro, semelhança e Teorema de Pitágoras com explicação e cálculo passo a passo.">
+<meta property="og:url" content="https://brainforms-edu.github.io/conteudo-matematica-geometria-plana/formula-geometria-plana/">
+<meta property="og:image" content="https://brainforms-edu.github.io/conteudo-matematica-geometria-plana/favicon-192x192.png">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fórmulas de Geometria Plana | BrainForms">
+<meta name="twitter:description" content="Página de fórmulas de geometria plana do BrainForms com resolução passo a passo.">
+<meta name="twitter:image" content="https://brainforms-edu.github.io/conteudo-matematica-geometria-plana/favicon-192x192.png">
+
+<link rel="icon" type="image/png" sizes="48x48" href="../favicon-48x48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../favicon-192x192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="../apple-touch-icon.png">
+<link rel="stylesheet" href="css/geometria-plana.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Fórmulas de Geometria Plana | BrainForms",
+  "url": "https://brainforms-edu.github.io/conteudo-matematica-geometria-plana/formula-geometria-plana/",
+  "inLanguage": "pt-BR",
+  "description": "Área, perímetro, semelhança e Teorema de Pitágoras com explicação e cálculo passo a passo.",
+  "about": [
+    "Fórmulas de geometria plana",
+    "Área e perímetro",
+    "Teorema de Pitágoras"
+  ],
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "BrainForms",
+    "url": "https://brainforms-edu.github.io/conteudo-matematica-geometria-plana/"
+  }
+}
+</script>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="../conteudo-geometria-plana/index.html" class="navbar-logo">
+      <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms">
+      <span>BrainForms</span>
+    </a>
+  </nav>
+
+  <nav class="breadcrumb" aria-label="Navegação rápida">
+    <div class="crumbs" role="navigation">
+      <a href="../conteudo-geometria-plana/index.html" class="item">Conteúdo</a>
+      <span class="sep">/</span>
+      <a href="index.html" class="item" aria-current="page">Fórmulas</a>
+    </div>
+  </nav>
+
+ <section class="section">
+    <div class="hero-section">
+      <h1>Fórmulas de Geometria Plana</h1>
+    </div>
+
+    <div class="def-container-desktop">
+      <h2>Definição</h2>
+      <img src="Imagens/geometriaplana.png" alt="geometria plana">
+      <div class="explicacao" id="explicacaoTextoDesktop" aria-live="polite" aria-atomic="true">
+        <strong>Perímetro de Polígono Regular</strong>
+        <p>O perímetro é a soma de todos os lados de um polígono. Em polígonos regulares os lados têm o mesmo comprimento.</p>
+        <p><span class="label-colon">Fórmula:</span> <span class="formula">P = n × a</span></p>
+        <p><span class="label-colon">Variáveis:</span> n = quantidade de lados (n ≥ 3), a = medida de cada lado.</p>
+        <p><span class="label-colon">Dica:</span> confirme a unidade de medida; mantenha n inteiro.</p>
+      </div>
+    </div>
+
+    <div class="direita">
+      <button class="info-btn"
+        data-info="Geometria plana estuda figuras em 2D. Comece pelo perímetro, avance para áreas, relações de semelhança e feche com o Teorema de Pitágoras."
+        onclick="showInfo(this)">
+        <img src="Imagens/info.png" alt="Informação">
+      </button>
+    </div>
+
+    <div class="calculo-desktop">
+      <h2 class="titulo-calculo-desktop" id="tituloFormulaDesktop">Perímetro de Polígono Regular</h2>
+      <div class="dropdown-container-desktop">
+        <div class="dropdown-desktop">
+          <div class="dropdown-button-desktop" id="dropdownButtonDesktop" onclick="toggleDropdownDesktop(event)">
+            Perímetro de Polígono Regular
+            <i class="arrow-desktop" id="arrowIconDesktop">▼</i>
+          </div>
+          <div class="dropdown-content-desktop" id="dropdownContentDesktop" role="menu" aria-label="Lista de cálculos">
+            <button role="menuitem" onclick="mostrarFormularioDesktop('perimetro')">Perímetro de Polígono Regular</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('areaQuadrado')">Área do Quadrado</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('areaRetangulo')">Área do Retângulo</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('perimetroRetangulo')">Perímetro do Retângulo</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('areaCirculo')">Área do Círculo</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('perimetroCirculo')">Perímetro do Círculo</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('areaTriangulo')">Área do Triângulo</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('areaParalelogramo')">Área do Paralelogramo</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('areaLosango')">Área do Losango</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('areaTrapezio')">Área do Trapézio</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('semelhanca')">Semelhança de Triângulos</button>
+            <button role="menuitem" onclick="mostrarFormularioDesktop('pitagoras')">Teorema de Pitágoras</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-header-desktop">
+        <h6>Insira os valores para o cálculo:</h6>
+      </div>
+
+      <div id="valores-digitados-desktop" class="value-summary" aria-live="polite"></div>
+
+      <form id="perimetroFormDesktop" class="calculo-form-desktop active" onsubmit="event.preventDefault(); calcularPerimetroDesktop();">
+        <input type="number" id="ladosPerimetroDesktop" placeholder="Quantidade de lados (n ≥ 3)" min="3" step="1" required />
+        <input type="number" id="medidaLadoDesktop" placeholder="Medida de cada lado" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaQuadradoFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularAreaQuadradoDesktop();">
+        <input type="number" id="ladoQuadradoDesktop" placeholder="Medida do lado" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaRetanguloFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularAreaRetanguloDesktop();">
+        <input type="number" id="baseRetanguloDesktop" placeholder="Base" min="0" step="0.01" required />
+        <input type="number" id="alturaRetanguloDesktop" placeholder="Altura" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="perimetroRetanguloFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularPerimetroRetanguloDesktop();">
+        <input type="number" id="basePerimetroRetanguloDesktop" placeholder="Base" min="0" step="0.01" required />
+        <input type="number" id="alturaPerimetroRetanguloDesktop" placeholder="Altura" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaCirculoFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularAreaCirculoDesktop();">
+        <input type="number" id="raioCirculoDesktop" placeholder="Raio" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="perimetroCirculoFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularPerimetroCirculoDesktop();">
+        <input type="number" id="raioPerimetroCirculoDesktop" placeholder="Raio" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaTrianguloFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularAreaTrianguloDesktop();">
+        <input type="number" id="baseTrianguloDesktop" placeholder="Base" min="0" step="0.01" required />
+        <input type="number" id="alturaTrianguloDesktop" placeholder="Altura" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaParalelogramoFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularAreaParalelogramoDesktop();">
+        <input type="number" id="baseParalelogramoDesktop" placeholder="Base" min="0" step="0.01" required />
+        <input type="number" id="alturaParalelogramoDesktop" placeholder="Altura" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaLosangoFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularAreaLosangoDesktop();">
+        <input type="number" id="diagonalMaiorLosangoDesktop" placeholder="Diagonal maior (D)" min="0" step="0.01" required />
+        <input type="number" id="diagonalMenorLosangoDesktop" placeholder="Diagonal menor (d)" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="areaTrapezioFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularAreaTrapezioDesktop();">
+        <input type="number" id="baseMaiorTrapezioDesktop" placeholder="Base maior (B)" min="0" step="0.01" required />
+        <input type="number" id="baseMenorTrapezioDesktop" placeholder="Base menor (b)" min="0" step="0.01" required />
+        <input type="number" id="alturaTrapezioDesktop" placeholder="Altura (h)" min="0" step="0.01" required />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="semelhancaFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularSemelhancaDesktop();">
+        <input type="number" id="ladoMenorDesktop" placeholder="Lado do triângulo de referência" min="0" step="0.01" required />
+        <input type="number" id="ladoMaiorDesktop" placeholder="Lado correspondente no outro triângulo" min="0" step="0.01" required />
+        <input type="number" id="areaReferencialDesktop" placeholder="Área conhecida (opcional)" min="0" step="0.01" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+
+      <form id="pitagorasFormDesktop" class="calculo-form-desktop" onsubmit="event.preventDefault(); calcularPitagorasDesktop();">
+        <input type="number" id="catetoADesktop" placeholder="Cateto b" min="0" step="0.01" />
+        <input type="number" id="catetoBDesktop" placeholder="Cateto c" min="0" step="0.01" />
+        <input type="number" id="hipotenusaDesktop" placeholder="Hipotenusa a" min="0" step="0.01" />
+        <button type="submit" class="calc-btn">Calcular</button>
+      </form>
+    </div>
+
+    <div id="resultado-desktop">
+      <h2>Resultado</h2>
+      <p id="mensagemResultadoDesktop"></p>
+      <h3>Resolução passo a passo:</h3>
+      <div id="passoAPassoDesktop"></div>
+    </div>
+  </section>
+
+  <footer class="footer-desktop">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="Imagens/Logo sem Fundo.png" alt="Logo BrainForms">
+          <span>BrainForms</span>
+        </div>
+        <p>Plataforma educacional dedicada ao ensino de Matemática e Física, oferecendo conteúdos didáticos, calculadoras interativas e exercícios práticos.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Copyright &copy; 2026 BrainForms. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+<script src="js/info-button.js"></script>
+<script src="js/conquistas-utils.js"></script>
+<script src="js/historico-formulas.js"></script>
+<script src="js/geometria-plana.js"></script>
+<script src="js/theme-manager.js"></script>
+</body>
+</html>
+

@@ -168,8 +168,12 @@ classificando as funções envolvidas.`
     }
 
     (function(){
-      function applyAccordionMode() {
+      let lastAccordionIsMobile = null;
+
+      function applyAccordionMode(force = false) {
         const isMobile = window.matchMedia('(max-width: 480px)').matches;
+        if (!force && lastAccordionIsMobile === isMobile) return;
+
         const headers = document.querySelectorAll('.accordion-header');
 
         headers.forEach((header) => {
@@ -184,6 +188,8 @@ classificando as funções envolvidas.`
             content.classList.add('active');
           }
         });
+
+        lastAccordionIsMobile = isMobile;
       }
 
       function updateBreadcrumbPosition(){
@@ -270,7 +276,7 @@ classificando as funções envolvidas.`
         window.addEventListener('scroll', applyHeaderVisibility, { passive: true });
       }
 
-      document.addEventListener('DOMContentLoaded', applyAccordionMode);
+      document.addEventListener('DOMContentLoaded', () => applyAccordionMode(true));
       document.addEventListener('DOMContentLoaded', updateBreadcrumbPosition);
       document.addEventListener('DOMContentLoaded', initSmartNavbar);
       window.addEventListener('scroll', updateBreadcrumbPosition, { passive: true });

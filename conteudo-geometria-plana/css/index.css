@@ -633,6 +633,112 @@
       color: #551A8B;
     }
 
+    .formula-promo-box {
+      margin-top: 54px;
+      border: 2px solid #6b2fb3;
+      border-radius: 14px;
+      padding: 22px 22px;
+      background: linear-gradient(160deg, #f8f1ff 0%, #f4ecff 55%, #eef4ff 100%);
+      box-shadow: 0 8px 24px rgba(55, 21, 92, 0.1);
+    }
+
+    .formula-cta {
+      margin-top: 10px;
+      padding: 0;
+    }
+
+    .formula-cta-label {
+      margin: 0 0 8px 0;
+      color: #4d2672;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .formula-cta h3 {
+      margin: 0;
+      color: #3f1d5c;
+      font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+      line-height: 1.3;
+    }
+
+    .formula-cta p {
+      margin-top: 10px;
+      color: #2f2f2f;
+    }
+
+    .formula-cta-actions {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .formula-cta-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(135deg, #6b2fb3 0%, #4f1f87 100%);
+      box-shadow: 0 8px 18px rgba(79, 31, 135, 0.28);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .formula-cta-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 22px rgba(79, 31, 135, 0.34);
+      filter: brightness(1.04);
+    }
+
+    .formula-cta-link:focus-visible {
+      outline: 3px solid rgba(65, 31, 115, 0.35);
+      outline-offset: 2px;
+    }
+
+    .formula-cta-tagline {
+      margin-left: auto;
+      display: inline-block;
+      padding: 0 0 2px 0;
+      border: none;
+      background: transparent;
+      color: #4a226b;
+      font-size: 13px;
+      font-style: italic;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      box-shadow: none;
+      border-bottom: 2px solid rgba(79, 31, 135, 0.28);
+      white-space: nowrap;
+    }
+
+    .formula-mini-topic {
+      margin-top: 0;
+      border-left: 4px solid #5E097E;
+      background: transparent;
+      border-radius: 0;
+      padding: 2px 0 2px 14px;
+    }
+
+    .formula-mini-topic h4 {
+      margin: 0;
+      color: #4d2672;
+      font-size: clamp(1rem, 1.3vw, 1.15rem);
+      line-height: 1.35;
+    }
+
+    .formula-mini-topic p {
+      margin: 8px 0 0 0;
+      color: #2f2f2f;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
     .author-box {
       margin-top: 100px;
       border: 2px solid #5E097E;
@@ -921,6 +1027,53 @@
 
       .bncc-modal-content {
         width: 100%;
+      }
+
+      .formula-promo-box {
+        margin-top: 30px;
+        padding: 16px 14px;
+      }
+
+      .formula-cta {
+        margin-top: 8px;
+      }
+
+      .formula-mini-topic {
+        margin-top: 0;
+        padding: 0 0 0 10px;
+      }
+
+      .formula-mini-topic h4 {
+        font-size: 16px;
+      }
+
+      .formula-mini-topic p {
+        font-size: 14px;
+      }
+
+      .formula-cta-label {
+        font-size: 11px;
+      }
+
+      .formula-cta h3 {
+        margin-top: 8px;
+      }
+
+      .formula-cta-actions {
+        flex-direction: column;
+        margin-top: 26px;
+      }
+
+      .formula-cta-link {
+        width: 100%;
+        padding: 11px 14px;
+      }
+
+      .formula-cta-tagline {
+        align-self: flex-end;
+        max-width: 100%;
+        white-space: normal;
+        text-align: right;
       }
 
       .author-box {
