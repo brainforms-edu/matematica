@@ -102,26 +102,37 @@ function readOptionalAreaInput(id) {
   return { provided: true, raw, unit, cm2: convertAreaToCm2(raw, unit) };
 }
 
+function formatStepNumber(value, decimals = 4) {
+  if (!Number.isFinite(value)) return '—';
+  return parseFloat(value.toFixed(decimals)).toString();
+}
+
 function conversionStepLength(symbol, data) {
   if (!data || data.unit === 'cm') return '';
-  return `<p><strong>Conversão:</strong> ${symbol} = ${data.raw.toFixed(2)} ${data.unit} = ${data.cm.toFixed(2)} cm.</p>`;
+  const factor = LENGTH_TO_CM[data.unit] || 1;
+  return `<p class="conversion-step conversion-step-initial"><strong>Conversão:</strong> ${symbol} = ${formatStepNumber(data.raw, 2)} ${data.unit} = ${formatStepNumber(data.raw, 2)} x <span class="conversion-constant">${formatStepNumber(factor, 4)}</span> = ${formatStepNumber(data.cm, 4)} cm.</p>`;
 }
 
 function conversionStepArea(symbol, data) {
   if (!data || !data.provided || data.unit === 'cm') return '';
-  return `<p><strong>Conversão:</strong> ${symbol} = ${data.raw.toFixed(2)} ${data.unit}² = ${data.cm2.toFixed(2)} cm².</p>`;
+  const factor = LENGTH_TO_CM[data.unit] || 1;
+  const factorSquared = factor * factor;
+  return `<p class="conversion-step conversion-step-initial"><strong>Conversão:</strong> ${symbol} = ${formatStepNumber(data.raw, 2)} ${data.unit}² = ${formatStepNumber(data.raw, 2)} x (<span class="conversion-constant">${formatStepNumber(factor, 4)}</span> x <span class="conversion-constant">${formatStepNumber(factor, 4)}</span>) = ${formatStepNumber(data.raw, 2)} x <span class="conversion-constant">${formatStepNumber(factorSquared, 4)}</span> = ${formatStepNumber(data.cm2, 4)} cm².</p>`;
 }
 
 function conversionResultStepLength(symbol, valueCm, outputUnit) {
   if (outputUnit === 'cm') return '';
+  const factor = LENGTH_TO_CM[outputUnit] || 1;
   const converted = convertCmToLength(valueCm, outputUnit);
-  return `<p><strong>Conversão final:</strong> ${symbol} = ${valueCm.toFixed(4)} cm = ${converted.toFixed(4)} ${outputUnit}.</p>`;
+  return `<p class="conversion-step conversion-step-final"><strong>Conversão final:</strong> ${symbol} = ${formatStepNumber(valueCm, 4)} cm = ${formatStepNumber(valueCm, 4)} ÷ <span class="conversion-constant">${formatStepNumber(factor, 4)}</span> = ${formatStepNumber(converted, 4)} ${outputUnit}.</p>`;
 }
 
 function conversionResultStepArea(symbol, valueCm2, outputUnit) {
   if (outputUnit === 'cm') return '';
+  const factor = LENGTH_TO_CM[outputUnit] || 1;
+  const factorSquared = factor * factor;
   const converted = convertCm2ToArea(valueCm2, outputUnit);
-  return `<p><strong>Conversão final:</strong> ${symbol} = ${valueCm2.toFixed(4)} cm² = ${converted.toFixed(4)} ${outputUnit}².</p>`;
+  return `<p class="conversion-step conversion-step-final"><strong>Conversão final:</strong> ${symbol} = ${formatStepNumber(valueCm2, 4)} cm² = ${formatStepNumber(valueCm2, 4)} ÷ (<span class="conversion-constant">${formatStepNumber(factor, 4)}</span> x <span class="conversion-constant">${formatStepNumber(factor, 4)}</span>) = ${formatStepNumber(valueCm2, 4)} ÷ <span class="conversion-constant">${formatStepNumber(factorSquared, 4)}</span> = ${formatStepNumber(converted, 4)} ${outputUnit}².</p>`;
 }
 
 function buildUnitSelect(id, ariaLabel, verbose = false) {
