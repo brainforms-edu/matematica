@@ -495,6 +495,25 @@
       overflow: visible;
     }
 
+    @media (max-width: 900px) {
+      .accordion-header {
+        cursor: pointer;
+      }
+
+      .accordion-arrow {
+        display: inline-block;
+      }
+
+      .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+      }
+
+      .accordion-content.active {
+        max-height: 20000px;
+      }
+    }
+
     .bncc-list {
       display: grid;
       grid-template-columns: repeat(2, max-content);

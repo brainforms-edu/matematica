@@ -154,16 +154,21 @@ classificando as funções envolvidas.`
       initTopicSidebar();
     });
 
+    const ACCORDION_COLLAPSIBLE_QUERY = '(max-width: 900px)';
+
     function toggleAccordion(header) {
-      if (!window.matchMedia('(max-width: 480px)').matches) return;
+      if (!window.matchMedia(ACCORDION_COLLAPSIBLE_QUERY).matches) return;
       const content = header.nextElementSibling;
+      if (!content || !content.classList.contains('accordion-content')) return;
       const isActive = header.classList.contains('active');
       if (isActive) {
         header.classList.remove('active');
         content.classList.remove('active');
+        header.dataset.mobileOpen = '0';
       } else {
         header.classList.add('active');
         content.classList.add('active');
+        header.dataset.mobileOpen = '1';
       }
     }
 
@@ -171,7 +176,7 @@ classificando as funções envolvidas.`
       let lastAccordionIsMobile = null;
 
       function applyAccordionMode(force = false) {
-        const isMobile = window.matchMedia('(max-width: 480px)').matches;
+        const isMobile = window.matchMedia(ACCORDION_COLLAPSIBLE_QUERY).matches;
         if (!force && lastAccordionIsMobile === isMobile) return;
 
         const headers = document.querySelectorAll('.accordion-header');
@@ -181,9 +186,11 @@ classificando as funções envolvidas.`
           if (!content || !content.classList.contains('accordion-content')) return;
 
           if (isMobile) {
-            header.classList.remove('active');
-            content.classList.remove('active');
+            const shouldStayOpen = header.dataset.mobileOpen === '1';
+            header.classList.toggle('active', shouldStayOpen);
+            content.classList.toggle('active', shouldStayOpen);
           } else {
+            header.dataset.mobileOpen = header.classList.contains('active') ? '1' : '0';
             header.classList.add('active');
             content.classList.add('active');
           }
